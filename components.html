@@ -1,0 +1,1536 @@
+<!-- 
+  Google広告サポート RAG 2.0 UIコンポーネント
+  Material Design 3ガイドラインに準拠した再利用可能なUIコンポーネント
+-->
+
+<!-- ダイアログコンポーネント -->
+<template id="dialog-template">
+  <div class="dialog">
+    <div class="dialog-container">
+      <div class="dialog-header">
+        <h2 class="dialog-title"></h2>
+        <button type="button" class="icon-button dialog-close">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="dialog-content"></div>
+      <div class="dialog-footer">
+        <button type="button" class="button button-text dialog-cancel"></button>
+        <button type="button" class="button button-filled dialog-confirm"></button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- アラートダイアログコンポーネント -->
+<template id="alert-dialog-template">
+  <div class="dialog alert-dialog">
+    <div class="dialog-container">
+      <div class="dialog-header">
+        <h2 class="dialog-title"></h2>
+        <button type="button" class="icon-button dialog-close">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="dialog-content">
+        <div class="alert-icon-container">
+          <span class="material-icons alert-icon"></span>
+        </div>
+        <div class="alert-message"></div>
+      </div>
+      <div class="dialog-footer">
+        <button type="button" class="button button-filled dialog-confirm"></button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- スナックバー通知コンポーネント -->
+<template id="snackbar-template">
+  <div class="snackbar">
+    <div class="snackbar-content">
+      <span class="snackbar-message"></span>
+      <button type="button" class="button button-text snackbar-action"></button>
+    </div>
+  </div>
+</template>
+
+<!-- トースト通知コンポーネント -->
+<template id="toast-template">
+  <div class="toast">
+    <div class="toast-content">
+      <span class="material-icons toast-icon"></span>
+      <span class="toast-message"></span>
+    </div>
+    <button type="button" class="icon-button toast-close">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+</template>
+
+<!-- カードコンポーネント -->
+<template id="card-template">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title"></h2>
+      <div class="card-actions"></div>
+    </div>
+    <div class="card-content"></div>
+    <div class="card-footer"></div>
+  </div>
+</template>
+
+<!-- 結果カードコンポーネント -->
+<template id="result-card-template">
+  <div class="card result-card">
+    <h3 class="result-title"></h3>
+    <p class="result-category"></p>
+    <div class="result-snippet">
+      <p class="result-content"></p>
+    </div>
+    <div class="result-meta">
+      <span class="result-relevance"></span>
+      <span class="result-language"></span>
+    </div>
+  </div>
+</template>
+
+<!-- レスポンスカードコンポーネント -->
+<template id="response-card-template">
+  <div class="card response-card">
+    <h2 class="response-title"></h2>
+    <div class="response-content"></div>
+    <div class="response-meta">
+      <span class="response-language"></span>
+      <span class="response-time"></span>
+    </div>
+  </div>
+</template>
+
+<!-- タブコンポーネント -->
+<template id="tabs-template">
+  <div class="tabs">
+    <div class="tabs-header">
+      <div class="tabs-scroller">
+        <div class="tabs-list"></div>
+      </div>
+    </div>
+    <div class="tabs-content"></div>
+  </div>
+</template>
+
+<!-- タブアイテムコンポーネント -->
+<template id="tab-item-template">
+  <button class="tab-item" role="tab"></button>
+</template>
+
+<!-- タブパネルコンポーネント -->
+<template id="tab-panel-template">
+  <div class="tab-panel" role="tabpanel"></div>
+</template>
+
+<!-- チップコンポーネント -->
+<template id="chip-template">
+  <div class="chip">
+    <span class="chip-label"></span>
+    <button type="button" class="chip-close">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+</template>
+
+<!-- フィルターチップコンポーネント -->
+<template id="filter-chip-template">
+  <div class="chip filter-chip">
+    <span class="chip-label"></span>
+  </div>
+</template>
+
+<!-- 空の状態コンポーネント -->
+<template id="empty-state-template">
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <span class="material-icons"></span>
+    </div>
+    <h3 class="empty-state-title"></h3>
+    <p class="empty-state-description"></p>
+    <button type="button" class="button button-filled empty-state-action"></button>
+  </div>
+</template>
+
+<!-- ローディングコンポーネント -->
+<template id="loading-template">
+  <div class="loading">
+    <div class="spinner"></div>
+    <p class="loading-text"></p>
+  </div>
+</template>
+
+<!-- ドキュメント詳細コンポーネント -->
+<template id="document-details-template">
+  <div class="document-details">
+    <div class="document-section">
+      <h3 class="section-title">Document Information</h3>
+      <dl class="document-info">
+        <div class="info-item">
+          <dt>Title</dt>
+          <dd class="document-title"></dd>
+        </div>
+        <div class="info-item">
+          <dt>Category</dt>
+          <dd class="document-category"></dd>
+        </div>
+        <div class="info-item">
+          <dt>Language</dt>
+          <dd class="document-language"></dd>
+        </div>
+        <div class="info-item">
+          <dt>Format</dt>
+          <dd class="document-format"></dd>
+        </div>
+        <div class="info-item">
+          <dt>Last Updated</dt>
+          <dd class="document-updated"></dd>
+        </div>
+      </dl>
+    </div>
+    
+    <div class="document-section">
+      <h3 class="section-title">Content</h3>
+      <div class="document-content"></div>
+    </div>
+  </div>
+</template>
+
+<!-- ヘルプコンテンツコンポーネント -->
+<template id="help-content-template">
+  <div class="help-content">
+    <div class="help-section">
+      <h3>Basic Search</h3>
+      <p>Enter your question in the search box and click the search button or press Enter.</p>
+      <p>You can select a specific category to narrow down the search results.</p>
+    </div>
+    
+    <div class="help-section">
+      <h3>Response Types</h3>
+      <p>You can select different response formats:</p>
+      <ul>
+        <li><strong>Standard:</strong> A general response format</li>
+        <li><strong>Email:</strong> Formatted like an email response</li>
+        <li><strong>PREP:</strong> Point, Reason, Example, Proposal format</li>
+        <li><strong>Detailed:</strong> In-depth response with more information</li>
+      </ul>
+    </div>
+    
+    <div class="help-section">
+      <h3>Gemini API Key</h3>
+      <p>You can optionally provide your own Gemini API key for enhanced performance.</p>
+      <p>Your API key is stored locally on your device and is never sent to our servers.</p>
+    </div>
+    
+    <div class="help-section">
+      <h3>Advanced Settings</h3>
+      <p>You can customize the search behavior:</p>
+      <ul>
+        <li><strong>Semantic Search Weight:</strong> Adjust the importance of meaning-based search</li>
+        <li><strong>Keyword Search Weight:</strong> Adjust the importance of keyword matching</li>
+        <li><strong>Expand Search Query:</strong> Include related terms in the search</li>
+        <li><strong>Use Cache:</strong> Use cached results for faster responses</li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<!-- システム情報コンポーネント -->
+<template id="system-info-template">
+  <div class="about-content">
+    <div class="about-section">
+      <h3>System Information</h3>
+      <p><strong>Status:</strong> <span class="system-status"></span></p>
+      <p><strong>Version:</strong> <span class="system-version"></span></p>
+      <p><strong>Last Updated:</strong> <span class="system-updated"></span></p>
+    </div>
+    
+    <div class="about-section">
+      <h3>Components</h3>
+      <ul class="system-components"></ul>
+    </div>
+    
+    <div class="about-section">
+      <h3>System Details</h3>
+      <p><strong>Document Count:</strong> <span class="system-document-count"></span></p>
+      <p><strong>Chunk Count:</strong> <span class="system-chunk-count"></span></p>
+      <p><strong>Template Count:</strong> <span class="system-template-count"></span></p>
+    </div>
+  </div>
+</template>
+
+<!-- UIコンポーネントを操作するためのユーティリティクラス -->
+<script>
+/**
+ * UIコンポーネントマネージャー
+ * テンプレートからUIコンポーネントを生成して管理します
+ */
+class ComponentManager {
+  /**
+   * コンポーネントを初期化します
+   */
+  static init() {
+    // すべてのテンプレートを登録
+    this.templates = {};
+    const templateElements = document.querySelectorAll('template');
+    
+    templateElements.forEach(template => {
+      const id = template.id;
+      if (id) {
+        const componentName = id.replace('-template', '');
+        this.templates[componentName] = template;
+      }
+    });
+    
+    console.log('Component Manager initialized with templates:', Object.keys(this.templates));
+  }
+  
+  /**
+   * テンプレートからコンポーネントを作成します
+   * @param {string} templateName テンプレート名
+   * @param {Object} properties コンポーネントのプロパティ
+   * @return {HTMLElement} 作成されたコンポーネント
+   */
+  static create(templateName, properties = {}) {
+    const template = this.templates[templateName];
+    
+    if (!template) {
+      console.error(`Template not found: ${templateName}`);
+      return null;
+    }
+    
+    // テンプレートのコンテンツをクローン
+    const clone = document.importNode(template.content, true);
+    const component = clone.firstElementChild;
+    
+    // プロパティを設定
+    for (const [key, value] of Object.entries(properties)) {
+      // 特別なケースの処理
+      if (key === 'content' && value) {
+        const contentEl = component.querySelector('.dialog-content, .card-content, .response-content, .document-content, .tab-panel');
+        if (contentEl) {
+          if (typeof value === 'string') {
+            contentEl.innerHTML = value;
+          } else if (value instanceof HTMLElement) {
+            contentEl.innerHTML = '';
+            contentEl.appendChild(value);
+          }
+        }
+      } else if (key === 'title' && value) {
+        const titleEl = component.querySelector('.dialog-title, .card-title, .response-title, .result-title, .empty-state-title');
+        if (titleEl) {
+          titleEl.textContent = value;
+        }
+      } else if (key === 'onConfirm' && typeof value === 'function') {
+        const confirmBtn = component.querySelector('.dialog-confirm');
+        if (confirmBtn) {
+          confirmBtn.addEventListener('click', value);
+        }
+      } else if (key === 'onCancel' && typeof value === 'function') {
+        const cancelBtn = component.querySelector('.dialog-cancel');
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', value);
+        }
+      } else if (key === 'onClose' && typeof value === 'function') {
+        const closeBtn = component.querySelector('.dialog-close, .toast-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', value);
+        }
+      } else if (key === 'confirmText' && value) {
+        const confirmBtn = component.querySelector('.dialog-confirm');
+        if (confirmBtn) {
+          confirmBtn.textContent = value;
+        }
+      } else if (key === 'cancelText' && value) {
+        const cancelBtn = component.querySelector('.dialog-cancel');
+        if (cancelBtn) {
+          cancelBtn.textContent = value;
+        }
+      } else if (key === 'message' && value) {
+        const messageEl = component.querySelector('.snackbar-message, .toast-message, .alert-message, .loading-text');
+        if (messageEl) {
+          messageEl.textContent = value;
+        }
+      } else if (key === 'icon' && value) {
+        const iconEl = component.querySelector('.toast-icon, .alert-icon, .empty-state-icon .material-icons');
+        if (iconEl) {
+          iconEl.textContent = value;
+        }
+      } else if (key === 'action' && typeof value === 'object') {
+        const actionBtn = component.querySelector('.snackbar-action, .empty-state-action');
+        if (actionBtn && value.text) {
+          actionBtn.textContent = value.text;
+          if (value.onClick && typeof value.onClick === 'function') {
+            actionBtn.addEventListener('click', value.onClick);
+          }
+        }
+      } else if (key === 'tabs' && Array.isArray(value)) {
+        this.setupTabs(component, value);
+      } else if (key === 'systemInfo' && typeof value === 'object') {
+        this.setupSystemInfo(component, value);
+      } else if (key === 'documentInfo' && typeof value === 'object') {
+        this.setupDocumentInfo(component, value);
+      } else if (key === 'resultInfo' && typeof value === 'object') {
+        this.setupResultInfo(component, value);
+      } else if (key === 'responseInfo' && typeof value === 'object') {
+        this.setupResponseInfo(component, value);
+      } else if (key === 'chips' && Array.isArray(value)) {
+        this.setupChips(component, value);
+      } else if (key === 'className' && value) {
+        component.classList.add(...value.split(' '));
+      }
+    }
+    
+    return component;
+  }
+  
+  /**
+   * タブコンポーネントをセットアップします
+   * @param {HTMLElement} component タブコンポーネント
+   * @param {Array} tabs タブ情報の配列
+   */
+  static setupTabs(component, tabs) {
+    const tabsList = component.querySelector('.tabs-list');
+    const tabsContent = component.querySelector('.tabs-content');
+    
+    if (!tabsList || !tabsContent) return;
+    
+    // タブとパネルをクリア
+    tabsList.innerHTML = '';
+    tabsContent.innerHTML = '';
+    
+    // タブとパネルを作成
+    tabs.forEach((tab, index) => {
+      // タブ作成
+      const tabTemplate = this.templates['tab-item'];
+      const tabClone = document.importNode(tabTemplate.content, true);
+      const tabElement = tabClone.firstElementChild;
+      
+      tabElement.textContent = tab.label;
+      tabElement.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+      tabElement.setAttribute('id', `tab-${index}`);
+      tabElement.setAttribute('aria-controls', `panel-${index}`);
+      
+      if (index === 0) {
+        tabElement.classList.add('active');
+      }
+      
+      // パネル作成
+      const panelTemplate = this.templates['tab-panel'];
+      const panelClone = document.importNode(panelTemplate.content, true);
+      const panelElement = panelClone.firstElementChild;
+      
+      if (typeof tab.content === 'string') {
+        panelElement.innerHTML = tab.content;
+      } else if (tab.content instanceof HTMLElement) {
+        panelElement.appendChild(tab.content);
+      }
+      
+      panelElement.setAttribute('id', `panel-${index}`);
+      panelElement.setAttribute('aria-labelledby', `tab-${index}`);
+      
+      if (index === 0) {
+        panelElement.classList.add('active');
+      } else {
+        panelElement.style.display = 'none';
+      }
+      
+      // クリックイベント
+      tabElement.addEventListener('click', () => {
+        // アクティブなタブとパネルを非アクティブにする
+        const activeTab = tabsList.querySelector('.tab-item.active');
+        const activePanel = tabsContent.querySelector('.tab-panel.active');
+        
+        if (activeTab) {
+          activeTab.classList.remove('active');
+          activeTab.setAttribute('aria-selected', 'false');
+        }
+        
+        if (activePanel) {
+          activePanel.classList.remove('active');
+          activePanel.style.display = 'none';
+        }
+        
+        // 選択されたタブとパネルをアクティブにする
+        tabElement.classList.add('active');
+        tabElement.setAttribute('aria-selected', 'true');
+        
+        panelElement.classList.add('active');
+        panelElement.style.display = 'block';
+        
+        // コールバックがあれば実行
+        if (tab.onActivate && typeof tab.onActivate === 'function') {
+          tab.onActivate(index, panelElement);
+        }
+      });
+      
+      // タブとパネルを追加
+      tabsList.appendChild(tabElement);
+      tabsContent.appendChild(panelElement);
+    });
+  }
+  
+  /**
+   * システム情報コンポーネントをセットアップします
+   * @param {HTMLElement} component システム情報コンポーネント
+   * @param {Object} info システム情報
+   */
+  static setupSystemInfo(component, info) {
+    // 基本情報
+    const statusEl = component.querySelector('.system-status');
+    const versionEl = component.querySelector('.system-version');
+    const updatedEl = component.querySelector('.system-updated');
+    const componentsEl = component.querySelector('.system-components');
+    const documentCountEl = component.querySelector('.system-document-count');
+    const chunkCountEl = component.querySelector('.system-chunk-count');
+    const templateCountEl = component.querySelector('.system-template-count');
+    
+    if (statusEl) statusEl.textContent = info.status || 'Unknown';
+    if (versionEl) versionEl.textContent = info.version || '1.0.0';
+    if (updatedEl && info.timestamp) updatedEl.textContent = new Date(info.timestamp).toLocaleString();
+    
+    // コンポーネント情報
+    if (componentsEl && info.components) {
+      componentsEl.innerHTML = '';
+      
+      for (const [name, status] of Object.entries(info.components)) {
+        const li = document.createElement('li');
+        const statusIcon = status ? '✅' : '❌';
+        li.innerHTML = `<strong>${name}:</strong> ${statusIcon}`;
+        componentsEl.appendChild(li);
+      }
+    }
+    
+    // 詳細情報
+    if (info.details) {
+      if (documentCountEl) documentCountEl.textContent = info.details.document_count || 0;
+      if (chunkCountEl) chunkCountEl.textContent = info.details.chunk_count || 0;
+      if (templateCountEl) templateCountEl.textContent = info.details.template_count || 0;
+    }
+  }
+  
+  /**
+   * ドキュメント情報コンポーネントをセットアップします
+   * @param {HTMLElement} component ドキュメント情報コンポーネント
+   * @param {Object} info ドキュメント情報
+   */
+  static setupDocumentInfo(component, info) {
+    const titleEl = component.querySelector('.document-title');
+    const categoryEl = component.querySelector('.document-category');
+    const languageEl = component.querySelector('.document-language');
+    const formatEl = component.querySelector('.document-format');
+    const updatedEl = component.querySelector('.document-updated');
+    const contentEl = component.querySelector('.document-content');
+    
+    if (titleEl) titleEl.textContent = info.title || 'Untitled';
+    if (categoryEl) categoryEl.textContent = info.category || 'Uncategorized';
+    if (languageEl) languageEl.textContent = info.language || 'Unknown';
+    if (formatEl) formatEl.textContent = info.format || 'Unknown';
+    
+    if (updatedEl && info.last_updated) {
+      updatedEl.textContent = new Date(info.last_updated).toLocaleString();
+    }
+    
+    if (contentEl) {
+      contentEl.innerHTML = info.content || info.snippet || 'No content available';
+    }
+  }
+  
+  /**
+   * 検索結果情報コンポーネントをセットアップします
+   * @param {HTMLElement} component 結果コンポーネント
+   * @param {Object} info 結果情報
+   */
+  static setupResultInfo(component, info) {
+    const titleEl = component.querySelector('.result-title');
+    const categoryEl = component.querySelector('.result-category');
+    const contentEl = component.querySelector('.result-content');
+    const relevanceEl = component.querySelector('.result-relevance');
+    const languageEl = component.querySelector('.result-language');
+    
+    if (titleEl) titleEl.textContent = info.title || 'Untitled Document';
+    if (categoryEl) categoryEl.textContent = info.category || 'General';
+    if (contentEl) contentEl.textContent = info.snippet || info.content || 'No preview available';
+    
+    if (relevanceEl && info.relevance_score) {
+      const relevanceText = typeof TranslationManager !== 'undefined' && TranslationManager.getTranslation ? 
+        TranslationManager.getTranslation('relevance') : 'Relevance';
+      relevanceEl.textContent = `${relevanceText}: ${Math.round(info.relevance_score * 100)}%`;
+    }
+    
+    if (languageEl) languageEl.textContent = info.language || 'Unknown';
+    
+    // クリックイベント
+    if (info.onClick && typeof info.onClick === 'function') {
+      component.addEventListener('click', () => info.onClick(info));
+    }
+  }
+  
+  /**
+   * レスポンス情報コンポーネントをセットアップします
+   * @param {HTMLElement} component レスポンスコンポーネント
+   * @param {Object} info レスポンス情報
+   */
+  static setupResponseInfo(component, info) {
+    const titleEl = component.querySelector('.response-title');
+    const contentEl = component.querySelector('.response-content');
+    const languageEl = component.querySelector('.response-language');
+    const timeEl = component.querySelector('.response-time');
+    
+    // レスポンスタイプの取得
+    const responseType = info.response_type || 'standard';
+    
+    // タイトル設定
+    if (titleEl) {
+      const responseText = typeof TranslationManager !== 'undefined' && TranslationManager.getTranslation ? 
+        TranslationManager.getTranslation('response') : 'Response';
+      titleEl.textContent = `${responseText} (${responseType})`;
+    }
+    
+    // コンテンツ設定（マークダウンをHTMLに変換）
+    if (contentEl && info.content) {
+      if (typeof UIController !== 'undefined' && UIController.convertMarkdownToHtml) {
+        contentEl.innerHTML = UIController.convertMarkdownToHtml(info.content);
+      } else {
+        contentEl.innerHTML = info.content;
+      }
+    }
+    
+    // メタ情報
+    if (languageEl) languageEl.textContent = info.language || 'Unknown';
+    
+    if (timeEl && info.generation_time_ms) {
+      const time = (info.generation_time_ms / 1000).toFixed(2);
+      timeEl.textContent = `${time}s`;
+    }
+  }
+  
+  /**
+   * チップコンポーネントをセットアップします
+   * @param {HTMLElement} container チップを追加するコンテナ
+   * @param {Array} chips チップ情報の配列
+   */
+  static setupChips(container, chips) {
+    // コンテナをクリア
+    container.innerHTML = '';
+    
+    // チップを作成
+    chips.forEach(chip => {
+      const isFilter = chip.type === 'filter';
+      const templateName = isFilter ? 'filter-chip' : 'chip';
+      
+      const chipElement = this.create(templateName, {
+        className: chip.className || ''
+      });
+      
+      // ラベル設定
+      const labelEl = chipElement.querySelector('.chip-label');
+      if (labelEl) {
+        labelEl.textContent = chip.label;
+      }
+      
+      // フィルターチップではない場合は閉じるボタンを設定
+      if (!isFilter) {
+        const closeBtn = chipElement.querySelector('.chip-close');
+        if (closeBtn && chip.onRemove && typeof chip.onRemove === 'function') {
+          closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            chip.onRemove(chip);
+          });
+        }
+      }
+      
+      // クリックイベント
+      if (chip.onClick && typeof chip.onClick === 'function') {
+        chipElement.addEventListener('click', () => chip.onClick(chip));
+      }
+      
+      // 選択状態の設定
+      if (chip.selected) {
+        chipElement.classList.add('selected');
+      }
+      
+      // コンテナに追加
+      container.appendChild(chipElement);
+    });
+  }
+  
+  /**
+   * ダイアログを表示します
+   * @param {HTMLElement} dialog ダイアログ要素
+   * @return {Promise} ダイアログの結果を返すPromise
+   */
+  static showDialog(dialog) {
+    return new Promise((resolve) => {
+      // ダイアログコンテナを作成（存在しない場合）
+      let dialogContainer = document.getElementById('dialog-container');
+      if (!dialogContainer) {
+        dialogContainer = document.createElement('div');
+        dialogContainer.id = 'dialog-container';
+        dialogContainer.className = 'modal-container';
+        
+        // バックドロップを作成
+        const backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop';
+        
+        // バックドロップクリックでダイアログを閉じる
+        backdrop.addEventListener('click', () => {
+          this.hideDialog();
+          resolve({ action: 'dismiss' });
+        });
+        
+        dialogContainer.appendChild(backdrop);
+        document.body.appendChild(dialogContainer);
+      }
+      
+      // 既存のダイアログを削除
+      const existingDialog = dialogContainer.querySelector('.dialog-container');
+      if (existingDialog) {
+        existingDialog.remove();
+      }
+      
+      // 新しいダイアログを追加
+      dialogContainer.appendChild(dialog);
+      
+      // 閉じるボタンのイベント
+      const closeBtn = dialog.querySelector('.dialog-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          this.hideDialog();
+          resolve({ action: 'close' });
+        });
+      }
+      
+      // キャンセルボタンのイベント
+      const cancelBtn = dialog.querySelector('.dialog-cancel');
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+          this.hideDialog();
+          resolve({ action: 'cancel' });
+        });
+      }
+      
+      // 確認ボタンのイベント（オリジナルのイベントを保持）
+      const confirmBtn = dialog.querySelector('.dialog-confirm');
+      if (confirmBtn) {
+        const originalOnClick = confirmBtn.onclick;
+        confirmBtn.onclick = (e) => {
+          if (originalOnClick) {
+            originalOnClick.call(confirmBtn, e);
+          }
+          this.hideDialog();
+          resolve({ action: 'confirm' });
+        };
+      }
+      
+      // ダイアログを表示
+      dialogContainer.style.display = 'block';
+      
+      // スクロールを無効化
+      document.body.style.overflow = 'hidden';
+      
+      // ESCキーでダイアログを閉じる
+      const keyHandler = (e) => {
+        if (e.key === 'Escape') {
+          this.hideDialog();
+          resolve({ action: 'dismiss' });
+          document.removeEventListener('keydown', keyHandler);
+        }
+      };
+      
+      document.addEventListener('keydown', keyHandler);
+    });
+  }
+  
+  /**
+   * ダイアログを非表示にします
+   */
+  static hideDialog() {
+    const dialogContainer = document.getElementById('dialog-container');
+    if (dialogContainer) {
+      dialogContainer.style.display = 'none';
+      
+      // スクロールを有効化
+      document.body.style.overflow = '';
+    }
+  }
+  
+  /**
+   * スナックバーを表示します
+   * @param {Object} options スナックバーオプション
+   * @param {string} options.message メッセージ
+   * @param {Object} options.action アクション情報
+   * @param {number} options.duration 表示時間（ミリ秒）
+   */
+  static showSnackbar(options) {
+    const { message, action, duration = 5000 } = options;
+    
+    // スナックバーコンテナを作成（存在しない場合）
+    let snackbarContainer = document.getElementById('snackbar-container');
+    if (!snackbarContainer) {
+      snackbarContainer = document.createElement('div');
+      snackbarContainer.id = 'snackbar-container';
+      document.body.appendChild(snackbarContainer);
+    }
+    
+    // 既存のスナックバーを削除
+    const existingSnackbar = snackbarContainer.querySelector('.snackbar');
+    if (existingSnackbar) {
+      existingSnackbar.remove();
+    }
+    
+    // スナックバーを作成
+    const snackbar = this.create('snackbar', {
+      message: message,
+      action: action
+    });
+    
+    // スナックバーを表示
+    snackbarContainer.appendChild(snackbar);
+    
+    // アニメーション
+    setTimeout(() => {
+      snackbar.classList.add('show');
+    }, 10);
+    
+    // 一定時間後に非表示
+    const timeout = setTimeout(() => {
+      this.hideSnackbar(snackbar);
+    }, duration);
+    
+    // スナックバーにタイムアウトIDを保存
+    snackbar._timeoutId = timeout;
+    
+    return snackbar;
+  }
+  
+  /**
+   * スナックバーを非表示にします
+   * @param {HTMLElement} snackbar スナックバー要素
+   */
+  static hideSnackbar(snackbar) {
+    if (!snackbar) {
+      const snackbarContainer = document.getElementById('snackbar-container');
+      if (snackbarContainer) {
+        snackbar = snackbarContainer.querySelector('.snackbar');
+      }
+    }
+    
+    if (snackbar) {
+      // タイムアウトをクリア
+      if (snackbar._timeoutId) {
+        clearTimeout(snackbar._timeoutId);
+      }
+      
+      // アニメーション
+      snackbar.classList.remove('show');
+      
+      // 削除
+      setTimeout(() => {
+        snackbar.remove();
+      }, 300);
+    }
+  }
+  
+  /**
+   * トーストを表示します
+   * @param {Object} options トーストオプション
+   * @param {string} options.message メッセージ
+   * @param {string} options.icon アイコン
+   * @param {string} options.type トーストタイプ ('info', 'success', 'warning', 'error')
+   * @param {number} options.duration 表示時間（ミリ秒）
+   */
+  static showToast(options) {
+    const { message, icon, type = 'info', duration = 3000 } = options;
+    
+    // アイコンマッピング
+    const iconMap = {
+      info: 'info',
+      success: 'check_circle',
+      warning: 'warning',
+      error: 'error'
+    };
+    
+    // トーストコンテナを作成（存在しない場合）
+    let toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+      toastContainer = document.createElement('div');
+      toastContainer.id = 'toast-container';
+      document.body.appendChild(toastContainer);
+    }
+    
+    // トーストを作成
+    const toast = this.create('toast', {
+      message: message,
+      icon: icon || iconMap[type],
+      className: `toast-${type}`
+    });
+    
+    // 閉じるボタンのイベント
+    const closeBtn = toast.querySelector('.toast-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        this.hideToast(toast);
+      });
+    }
+    
+    // トーストを表示
+    toastContainer.appendChild(toast);
+    
+    // アニメーション
+    setTimeout(() => {
+      toast.classList.add('show');
+    }, 10);
+    
+    // 一定時間後に非表示
+    const timeout = setTimeout(() => {
+      this.hideToast(toast);
+    }, duration);
+    
+    // トーストにタイムアウトIDを保存
+    toast._timeoutId = timeout;
+    
+    return toast;
+  }
+  
+  /**
+   * トーストを非表示にします
+   * @param {HTMLElement} toast トースト要素
+   */
+  static hideToast(toast) {
+    if (!toast) return;
+    
+    // タイムアウトをクリア
+    if (toast._timeoutId) {
+      clearTimeout(toast._timeoutId);
+    }
+    
+    // アニメーション
+    toast.classList.remove('show');
+    
+    // 削除
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  }
+}
+
+// UIコンポーネント用のCSSスタイル
+const componentStyles = `
+/* ダイアログスタイル */
+.dialog {
+  background-color: var(--md-sys-color-surface);
+  border-radius: var(--md-sys-shape-corner-large);
+  box-shadow: var(--md-sys-elevation-level3);
+  width: 90%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: 5vh auto 0;
+  animation: dialog-appear var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+}
+
+@keyframes dialog-appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.dialog-title {
+  font-family: var(--md-sys-typescale-title-large-font-family);
+  font-size: var(--md-sys-typescale-title-large-font-size);
+  font-weight: var(--md-sys-typescale-title-large-font-weight);
+  margin: 0;
+  color: var(--md-sys-color-on-surface);
+}
+
+.dialog-content {
+  padding: 24px;
+  color: var(--md-sys-color-on-surface);
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* アラートダイアログスタイル */
+.alert-dialog .dialog-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.alert-icon-container {
+  flex-shrink: 0;
+}
+
+.alert-icon {
+  font-size: 32px;
+}
+
+.alert-message {
+  flex: 1;
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  line-height: var(--md-sys-typescale-body-medium-line-height);
+}
+
+/* スナックバースタイル */
+#snackbar-container {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.snackbar {
+  background-color: var(--md-sys-color-inverse-surface);
+  color: var(--md-sys-color-inverse-on-surface);
+  border-radius: var(--md-sys-shape-corner-small);
+  padding: 14px 16px;
+  min-width: 288px;
+  max-width: 568px;
+  box-shadow: var(--md-sys-elevation-level3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: transform 0.3s var(--md-sys-motion-easing-standard),
+              opacity 0.3s var(--md-sys-motion-easing-standard);
+}
+
+.snackbar.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.snackbar-message {
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  line-height: var(--md-sys-typescale-body-medium-line-height);
+  flex: 1;
+  margin-right: 16px;
+}
+
+.snackbar-action {
+  font-family: var(--md-sys-typescale-label-large-font-family);
+  font-size: var(--md-sys-typescale-label-large-font-size);
+  font-weight: var(--md-sys-typescale-label-large-font-weight);
+  text-transform: uppercase;
+  color: var(--md-sys-color-primary);
+  background-color: transparent;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: var(--md-sys-shape-corner-small);
+  transition: background-color 0.2s var(--md-sys-motion-easing-standard);
+}
+
+.snackbar-action:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* トーストスタイル */
+#toast-container {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 360px;
+}
+
+.toast {
+  background-color: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
+  border-radius: var(--md-sys-shape-corner-medium);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--md-sys-elevation-level2);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.3s var(--md-sys-motion-easing-standard),
+              opacity 0.3s var(--md-sys-motion-easing-standard);
+}
+
+.toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toast-icon {
+  font-size: 20px;
+}
+
+.toast-message {
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  line-height: var(--md-sys-typescale-body-medium-line-height);
+}
+
+.toast-info {
+  border-left: 4px solid var(--md-sys-color-primary);
+}
+
+.toast-info .toast-icon {
+  color: var(--md-sys-color-primary);
+}
+
+.toast-success {
+  border-left: 4px solid var(--md-sys-color-tertiary);
+}
+
+.toast-success .toast-icon {
+  color: var(--md-sys-color-tertiary);
+}
+
+.toast-warning {
+  border-left: 4px solid #f9a825; /* Amber */
+}
+
+.toast-warning .toast-icon {
+  color: #f9a825;
+}
+
+.toast-error {
+  border-left: 4px solid var(--md-sys-color-error);
+}
+
+.toast-error .toast-icon {
+  color: var(--md-sys-color-error);
+}
+
+/* タブスタイル */
+.tabs {
+  width: 100%;
+}
+
+.tabs-header {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.tabs-scroller {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.tabs-scroller::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.tabs-list {
+  display: flex;
+  width: max-content;
+}
+
+.tab-item {
+  padding: 12px 16px;
+  font-family: var(--md-sys-typescale-title-small-font-family);
+  font-size: var(--md-sys-typescale-title-small-font-size);
+  font-weight: var(--md-sys-typescale-title-small-font-weight);
+  color: var(--md-sys-color-on-surface-variant);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s var(--md-sys-motion-easing-standard);
+}
+
+.tab-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--md-sys-color-primary);
+  transform: scaleX(0);
+  transition: transform 0.2s var(--md-sys-motion-easing-standard);
+}
+
+.tab-item.active {
+  color: var(--md-sys-color-primary);
+}
+
+.tab-item.active::after {
+  transform: scaleX(1);
+}
+
+.tab-panel {
+  padding: 24px 0;
+}
+
+/* チップスタイル */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  border-radius: 16px;
+  padding: 0 12px;
+  background-color: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--md-sys-typescale-label-large-font-family);
+  font-size: var(--md-sys-typescale-label-large-font-size);
+  font-weight: var(--md-sys-typescale-label-large-font-weight);
+  margin: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s var(--md-sys-motion-easing-standard);
+}
+
+.chip:hover {
+  background-color: var(--md-sys-color-surface);
+}
+
+.chip.selected {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+.chip-label {
+  margin-right: 4px;
+}
+
+.chip-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  color: var(--md-sys-color-on-surface-variant);
+  transition: background-color 0.2s var(--md-sys-motion-easing-standard);
+}
+
+.chip-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.filter-chip {
+  background-color: transparent;
+  border: 1px solid var(--md-sys-color-outline);
+}
+
+.filter-chip.selected {
+  background-color: var(--md-sys-color-secondary-container);
+  border-color: var(--md-sys-color-secondary);
+}
+
+/* 空の状態スタイル */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-state-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--md-sys-color-surface-variant);
+  margin-bottom: 24px;
+}
+
+.empty-state-icon .material-icons {
+  font-size: 48px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.empty-state-title {
+  font-family: var(--md-sys-typescale-headline-small-font-family);
+  font-size: var(--md-sys-typescale-headline-small-font-size);
+  font-weight: var(--md-sys-typescale-headline-small-font-weight);
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 8px;
+}
+
+.empty-state-description {
+  font-family: var(--md-sys-typescale-body-large-font-family);
+  font-size: var(--md-sys-typescale-body-large-font-size);
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 24px;
+  max-width: 400px;
+}
+
+.empty-state-action {
+  margin-top: 16px;
+}
+
+/* ローディングスタイル */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(26, 115, 232, 0.2);
+  border-top: 4px solid var(--md-sys-color-primary);
+  border-radius: 50%;
+  margin-bottom: 16px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* ドキュメント詳細スタイル */
+.document-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.document-section {
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  padding-bottom: 16px;
+}
+
+.document-section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-family: var(--md-sys-typescale-title-medium-font-family);
+  font-size: var(--md-sys-typescale-title-medium-font-size);
+  font-weight: var(--md-sys-typescale-title-medium-font-weight);
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 16px;
+}
+
+.document-info {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 480px) {
+  .document-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-item dt {
+  font-family: var(--md-sys-typescale-label-medium-font-family);
+  font-size: var(--md-sys-typescale-label-medium-font-size);
+  font-weight: var(--md-sys-typescale-label-medium-font-weight);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.info-item dd {
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+}
+
+.document-content {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 16px;
+  border-radius: var(--md-sys-shape-corner-small);
+  background-color: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  line-height: 1.6;
+}
+
+/* ヘルプコンテンツスタイル */
+.help-content, .about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.help-section, .about-section {
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  padding-bottom: 16px;
+}
+
+.help-section:last-child, .about-section:last-child {
+  border-bottom: none;
+}
+
+.help-section h3, .about-section h3 {
+  font-family: var(--md-sys-typescale-title-medium-font-family);
+  font-size: var(--md-sys-typescale-title-medium-font-size);
+  font-weight: var(--md-sys-typescale-title-medium-font-weight);
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 12px;
+}
+
+.help-section p, .about-section p {
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.help-section p:last-child, .about-section p:last-child {
+  margin-bottom: 0;
+}
+
+.help-section ul, .about-section ul {
+  margin-left: 24px;
+  margin-bottom: 16px;
+}
+
+.help-section li, .about-section li {
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+/* レスポンシブスタイル */
+@media (max-width: 480px) {
+  .dialog {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  .dialog-content {
+    max-height: calc(100vh - 130px);
+  }
+  
+  #toast-container {
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
+  
+  .toast {
+    width: 100%;
+  }
+}
+`;
+
+// コンポーネントスタイルをページに追加
+(function() {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = componentStyles;
+  document.head.appendChild(styleElement);
+})();
+
+// DOMContentLoadedイベントでコンポーネントマネージャーを初期化
+document.addEventListener('DOMContentLoaded', () => {
+  ComponentManager.init();
+});
+
+/**
+ * 多言語対応ユーティリティクラス
+ * UIの翻訳をサポートします
+ */
+class TranslationManager {
+  /**
+   * 翻訳データを設定します
+   * @param {Object} translations 翻訳データ
+   */
+  static setTranslations(translations) {
+    this.translations = translations || {};
+  }
+  
+  /**
+   * 現在の言語を設定します
+   * @param {string} language 言語コード
+   */
+  static setLanguage(language) {
+    this.language = language || 'en';
+  }
+  
+  /**
+   * 翻訳テキストを取得します
+   * @param {string} key 翻訳キー
+   * @return {string} 翻訳テキスト
+   */
+  static getTranslation(key) {
+    const translations = this.translations[this.language] || this.translations.en || {};
+    return translations[key] || key;
+  }
+  
+  /**
+   * 現在の言語を取得します
+   * @return {string} 現在の言語コード
+   */
+  static getLanguage() {
+    return this.language || 'en';
+  }
+}
+
+// 初期化
+TranslationManager.setLanguage('ja');
+</script>
