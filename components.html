@@ -1,92 +1,55 @@
 <!-- 
   Google広告サポート RAG 2.0 UIコンポーネント
-  Material Design 3ガイドラインに準拠した再利用可能なUIコンポーネント
+  Material Design 3に準拠した再利用可能なUIコンポーネントを提供
 -->
 
 <!-- ダイアログコンポーネント -->
 <template id="dialog-template">
-  <div class="dialog">
-    <div class="dialog-container">
-      <div class="dialog-header">
-        <h2 class="dialog-title"></h2>
-        <button type="button" class="icon-button dialog-close">
-          <span class="material-icons">close</span>
-        </button>
-      </div>
-      <div class="dialog-content"></div>
-      <div class="dialog-footer">
-        <button type="button" class="button button-text dialog-cancel"></button>
-        <button type="button" class="button button-filled dialog-confirm"></button>
-      </div>
-    </div>
-  </div>
-</template>
-
-<!-- アラートダイアログコンポーネント -->
-<template id="alert-dialog-template">
-  <div class="dialog alert-dialog">
-    <div class="dialog-container">
-      <div class="dialog-header">
-        <h2 class="dialog-title"></h2>
-        <button type="button" class="icon-button dialog-close">
-          <span class="material-icons">close</span>
-        </button>
-      </div>
-      <div class="dialog-content">
-        <div class="alert-icon-container">
-          <span class="material-icons alert-icon"></span>
+  <div class="md-dialog">
+    <div class="md-dialog-container">
+      <div class="md-dialog-surface">
+        <div class="md-dialog-header">
+          <h2 class="md-dialog-title"></h2>
+          <button class="md-icon-button md-dialog-close" aria-label="閉じる">
+            <span class="material-icons">close</span>
+          </button>
         </div>
-        <div class="alert-message"></div>
-      </div>
-      <div class="dialog-footer">
-        <button type="button" class="button button-filled dialog-confirm"></button>
+        <div class="md-dialog-content"></div>
+        <div class="md-dialog-actions">
+          <button class="md-button md-text-button md-dialog-cancel"></button>
+          <button class="md-button md-filled-button md-dialog-confirm"></button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<!-- スナックバー通知コンポーネント -->
+<!-- スナックバーコンポーネント -->
 <template id="snackbar-template">
-  <div class="snackbar">
-    <div class="snackbar-content">
-      <span class="snackbar-message"></span>
-      <button type="button" class="button button-text snackbar-action"></button>
+  <div class="md-snackbar">
+    <div class="md-snackbar-message"></div>
+    <div class="md-snackbar-action">
+      <button class="md-button md-text-button md-snackbar-button"></button>
     </div>
   </div>
 </template>
 
-<!-- トースト通知コンポーネント -->
-<template id="toast-template">
-  <div class="toast">
-    <div class="toast-content">
-      <span class="material-icons toast-icon"></span>
-      <span class="toast-message"></span>
+<!-- ドロップダウンメニューコンポーネント -->
+<template id="dropdown-menu-template">
+  <div class="md-menu">
+    <div class="md-menu-surface">
+      <ul class="md-menu-list"></ul>
     </div>
-    <button type="button" class="icon-button toast-close">
-      <span class="material-icons">close</span>
-    </button>
   </div>
 </template>
 
-<!-- カードコンポーネント -->
-<template id="card-template">
-  <div class="card">
-    <div class="card-header">
-      <h2 class="card-title"></h2>
-      <div class="card-actions"></div>
-    </div>
-    <div class="card-content"></div>
-    <div class="card-footer"></div>
-  </div>
-</template>
-
-<!-- 結果カードコンポーネント -->
-<template id="result-card-template">
+<!-- 検索結果カードコンポーネント -->
+<template id="search-result-card-template">
   <div class="card result-card">
     <h3 class="result-title"></h3>
     <p class="result-category"></p>
     <div class="result-snippet">
-      <p class="result-content"></p>
+      <p></p>
     </div>
     <div class="result-meta">
       <span class="result-relevance"></span>
@@ -104,99 +67,94 @@
       <span class="response-language"></span>
       <span class="response-time"></span>
     </div>
+    <div class="response-actions">
+      <button class="md-icon-button response-copy" aria-label="コピー">
+        <span class="material-icons">content_copy</span>
+      </button>
+      <button class="md-icon-button response-share" aria-label="共有">
+        <span class="material-icons">share</span>
+      </button>
+      <button class="md-icon-button response-feedback" aria-label="フィードバック">
+        <span class="material-icons">thumb_up_off_alt</span>
+      </button>
+    </div>
   </div>
 </template>
 
 <!-- タブコンポーネント -->
 <template id="tabs-template">
-  <div class="tabs">
-    <div class="tabs-header">
-      <div class="tabs-scroller">
-        <div class="tabs-list"></div>
+  <div class="md-tabs">
+    <div class="md-tabs-bar">
+      <div class="md-tabs-scroller">
+        <div class="md-tabs-container"></div>
       </div>
     </div>
-    <div class="tabs-content"></div>
+    <div class="md-tabs-content"></div>
   </div>
 </template>
 
-<!-- タブアイテムコンポーネント -->
-<template id="tab-item-template">
-  <button class="tab-item" role="tab"></button>
-</template>
-
-<!-- タブパネルコンポーネント -->
-<template id="tab-panel-template">
-  <div class="tab-panel" role="tabpanel"></div>
-</template>
-
-<!-- チップコンポーネント -->
-<template id="chip-template">
-  <div class="chip">
-    <span class="chip-label"></span>
-    <button type="button" class="chip-close">
-      <span class="material-icons">close</span>
-    </button>
-  </div>
-</template>
-
-<!-- フィルターチップコンポーネント -->
-<template id="filter-chip-template">
-  <div class="chip filter-chip">
-    <span class="chip-label"></span>
-  </div>
-</template>
-
-<!-- 空の状態コンポーネント -->
-<template id="empty-state-template">
-  <div class="empty-state">
-    <div class="empty-state-icon">
-      <span class="material-icons"></span>
+<!-- テンプレート選択カードコンポーネント -->
+<template id="template-card-template">
+  <div class="card template-card">
+    <div class="template-header">
+      <h3 class="template-title"></h3>
+      <span class="template-badge"></span>
     </div>
-    <h3 class="empty-state-title"></h3>
-    <p class="empty-state-description"></p>
-    <button type="button" class="button button-filled empty-state-action"></button>
+    <div class="template-description"></div>
+    <div class="template-meta">
+      <span class="template-language"></span>
+      <span class="template-category"></span>
+    </div>
+    <div class="template-actions">
+      <button class="md-button md-filled-button template-select"></button>
+    </div>
   </div>
 </template>
 
-<!-- ローディングコンポーネント -->
-<template id="loading-template">
-  <div class="loading">
-    <div class="spinner"></div>
-    <p class="loading-text"></p>
+<!-- フィードバックダイアログコンポーネント -->
+<template id="feedback-dialog-template">
+  <div class="feedback-form">
+    <div class="feedback-rating">
+      <h3 class="feedback-question"></h3>
+      <div class="rating-buttons">
+        <button class="rating-button" data-rating="1">
+          <span class="material-icons">sentiment_very_dissatisfied</span>
+        </button>
+        <button class="rating-button" data-rating="2">
+          <span class="material-icons">sentiment_dissatisfied</span>
+        </button>
+        <button class="rating-button" data-rating="3">
+          <span class="material-icons">sentiment_neutral</span>
+        </button>
+        <button class="rating-button" data-rating="4">
+          <span class="material-icons">sentiment_satisfied</span>
+        </button>
+        <button class="rating-button" data-rating="5">
+          <span class="material-icons">sentiment_very_satisfied</span>
+        </button>
+      </div>
+    </div>
+    <div class="feedback-comment">
+      <label for="feedback-comment-input" class="feedback-comment-label"></label>
+      <textarea id="feedback-comment-input" class="feedback-comment-input" rows="3"></textarea>
+    </div>
   </div>
 </template>
 
-<!-- ドキュメント詳細コンポーネント -->
-<template id="document-details-template">
+<!-- ドキュメント詳細表示コンポーネント -->
+<template id="document-detail-template">
   <div class="document-details">
     <div class="document-section">
-      <h3 class="section-title">Document Information</h3>
-      <dl class="document-info">
-        <div class="info-item">
-          <dt>Title</dt>
-          <dd class="document-title"></dd>
-        </div>
-        <div class="info-item">
-          <dt>Category</dt>
-          <dd class="document-category"></dd>
-        </div>
-        <div class="info-item">
-          <dt>Language</dt>
-          <dd class="document-language"></dd>
-        </div>
-        <div class="info-item">
-          <dt>Format</dt>
-          <dd class="document-format"></dd>
-        </div>
-        <div class="info-item">
-          <dt>Last Updated</dt>
-          <dd class="document-updated"></dd>
-        </div>
-      </dl>
+      <h3 class="document-info-title"></h3>
+      <p><strong class="document-title-label"></strong> <span class="document-title-value"></span></p>
+      <p><strong class="document-category-label"></strong> <span class="document-category-value"></span></p>
+      <p><strong class="document-language-label"></strong> <span class="document-language-value"></span></p>
+      <p><strong class="document-format-label"></strong> <span class="document-format-value"></span></p>
+      <p><strong class="document-updated-label"></strong> <span class="document-updated-value"></span></p>
     </div>
     
     <div class="document-section">
-      <h3 class="section-title">Content</h3>
+      <h3 class="document-content-title"></h3>
       <div class="document-content"></div>
     </div>
   </div>
@@ -206,36 +164,36 @@
 <template id="help-content-template">
   <div class="help-content">
     <div class="help-section">
-      <h3>Basic Search</h3>
-      <p>Enter your question in the search box and click the search button or press Enter.</p>
-      <p>You can select a specific category to narrow down the search results.</p>
+      <h3 class="help-section-title-basic"></h3>
+      <p class="help-basic-search-text"></p>
+      <p class="help-category-text"></p>
     </div>
     
     <div class="help-section">
-      <h3>Response Types</h3>
-      <p>You can select different response formats:</p>
+      <h3 class="help-section-title-response"></h3>
+      <p class="help-response-types-text"></p>
       <ul>
-        <li><strong>Standard:</strong> A general response format</li>
-        <li><strong>Email:</strong> Formatted like an email response</li>
-        <li><strong>PREP:</strong> Point, Reason, Example, Proposal format</li>
-        <li><strong>Detailed:</strong> In-depth response with more information</li>
+        <li><strong class="help-standard-title"></strong> <span class="help-standard-text"></span></li>
+        <li><strong class="help-email-title"></strong> <span class="help-email-text"></span></li>
+        <li><strong class="help-prep-title"></strong> <span class="help-prep-text"></span></li>
+        <li><strong class="help-detailed-title"></strong> <span class="help-detailed-text"></span></li>
       </ul>
     </div>
     
     <div class="help-section">
-      <h3>Gemini API Key</h3>
-      <p>You can optionally provide your own Gemini API key for enhanced performance.</p>
-      <p>Your API key is stored locally on your device and is never sent to our servers.</p>
+      <h3 class="help-section-title-api"></h3>
+      <p class="help-api-text-1"></p>
+      <p class="help-api-text-2"></p>
     </div>
     
     <div class="help-section">
-      <h3>Advanced Settings</h3>
-      <p>You can customize the search behavior:</p>
+      <h3 class="help-section-title-advanced"></h3>
+      <p class="help-advanced-text"></p>
       <ul>
-        <li><strong>Semantic Search Weight:</strong> Adjust the importance of meaning-based search</li>
-        <li><strong>Keyword Search Weight:</strong> Adjust the importance of keyword matching</li>
-        <li><strong>Expand Search Query:</strong> Include related terms in the search</li>
-        <li><strong>Use Cache:</strong> Use cached results for faster responses</li>
+        <li><strong class="help-semantic-title"></strong> <span class="help-semantic-text"></span></li>
+        <li><strong class="help-keyword-title"></strong> <span class="help-keyword-text"></span></li>
+        <li><strong class="help-expand-title"></strong> <span class="help-expand-text"></span></li>
+        <li><strong class="help-cache-title"></strong> <span class="help-cache-text"></span></li>
       </ul>
     </div>
   </div>
@@ -245,709 +203,973 @@
 <template id="system-info-template">
   <div class="about-content">
     <div class="about-section">
-      <h3>System Information</h3>
-      <p><strong>Status:</strong> <span class="system-status"></span></p>
-      <p><strong>Version:</strong> <span class="system-version"></span></p>
-      <p><strong>Last Updated:</strong> <span class="system-updated"></span></p>
+      <h3 class="about-system-title"></h3>
+      <p><strong class="about-status-label"></strong> <span class="about-status-value"></span></p>
+      <p><strong class="about-version-label"></strong> <span class="about-version-value"></span></p>
+      <p><strong class="about-updated-label"></strong> <span class="about-updated-value"></span></p>
     </div>
     
     <div class="about-section">
-      <h3>Components</h3>
-      <ul class="system-components"></ul>
+      <h3 class="about-components-title"></h3>
+      <ul class="about-components-list"></ul>
     </div>
     
-    <div class="about-section">
-      <h3>System Details</h3>
-      <p><strong>Document Count:</strong> <span class="system-document-count"></span></p>
-      <p><strong>Chunk Count:</strong> <span class="system-chunk-count"></span></p>
-      <p><strong>Template Count:</strong> <span class="system-template-count"></span></p>
+    <div class="about-section about-details-section">
+      <h3 class="about-details-title"></h3>
+      <p><strong class="about-document-count-label"></strong> <span class="about-document-count-value"></span></p>
+      <p><strong class="about-chunk-count-label"></strong> <span class="about-chunk-count-value"></span></p>
+      <p><strong class="about-template-count-label"></strong> <span class="about-template-count-value"></span></p>
     </div>
   </div>
 </template>
 
-<!-- UIコンポーネントを操作するためのユーティリティクラス -->
+<!-- プログレスインジケーターコンポーネント -->
+<template id="progress-indicator-template">
+  <div class="md-linear-progress">
+    <div class="md-linear-progress-track">
+      <div class="md-linear-progress-indicator"></div>
+    </div>
+  </div>
+</template>
+
+<!-- チップコンポーネント -->
+<template id="chip-template">
+  <div class="md-chip">
+    <span class="md-chip-text"></span>
+    <button class="md-icon-button md-chip-remove" aria-label="削除">
+      <span class="material-icons">cancel</span>
+    </button>
+  </div>
+</template>
+
+<!-- ファイルアップロードコンポーネント -->
+<template id="file-upload-template">
+  <div class="md-file-upload">
+    <div class="md-file-upload-drop-area">
+      <span class="material-icons md-file-upload-icon">cloud_upload</span>
+      <p class="md-file-upload-message"></p>
+      <p class="md-file-upload-formats"></p>
+      <input type="file" class="md-file-upload-input" hidden>
+    </div>
+    <div class="md-file-upload-files">
+      <p class="md-file-upload-selected"></p>
+      <div class="md-file-upload-list"></div>
+    </div>
+    <div class="md-file-upload-actions">
+      <button class="md-button md-outlined-button md-file-upload-button"></button>
+      <button class="md-button md-text-button md-file-clear-button"></button>
+    </div>
+  </div>
+</template>
+
+<!-- コンポーネント初期化スクリプト -->
 <script>
 /**
- * UIコンポーネントマネージャー
- * テンプレートからUIコンポーネントを生成して管理します
+ * UIコンポーネントの初期化と動作を管理するユーティリティ
  */
-class ComponentManager {
+const ComponentsUtils = {
   /**
-   * コンポーネントを初期化します
+   * コンポーネントライブラリを初期化
    */
-  static init() {
-    // すべてのテンプレートを登録
-    this.templates = {};
-    const templateElements = document.querySelectorAll('template');
+  init: function() {
+    // ダイアログコンポーネントの初期化
+    this.initDialogComponents();
     
-    templateElements.forEach(template => {
-      const id = template.id;
-      if (id) {
-        const componentName = id.replace('-template', '');
-        this.templates[componentName] = template;
-      }
-    });
+    // スナックバーコンポーネントの初期化
+    this.initSnackbarComponents();
     
-    console.log('Component Manager initialized with templates:', Object.keys(this.templates));
-  }
+    // コンソールにロギング
+    console.log("Components initialized successfully");
+  },
   
   /**
-   * テンプレートからコンポーネントを作成します
-   * @param {string} templateName テンプレート名
-   * @param {Object} properties コンポーネントのプロパティ
-   * @return {HTMLElement} 作成されたコンポーネント
+   * ダイアログコンポーネントを初期化
    */
-  static create(templateName, properties = {}) {
-    const template = this.templates[templateName];
-    
-    if (!template) {
-      console.error(`Template not found: ${templateName}`);
-      return null;
-    }
-    
-    // テンプレートのコンテンツをクローン
-    const clone = document.importNode(template.content, true);
-    const component = clone.firstElementChild;
-    
-    // プロパティを設定
-    for (const [key, value] of Object.entries(properties)) {
-      // 特別なケースの処理
-      if (key === 'content' && value) {
-        const contentEl = component.querySelector('.dialog-content, .card-content, .response-content, .document-content, .tab-panel');
-        if (contentEl) {
-          if (typeof value === 'string') {
-            contentEl.innerHTML = value;
-          } else if (value instanceof HTMLElement) {
-            contentEl.innerHTML = '';
-            contentEl.appendChild(value);
-          }
-        }
-      } else if (key === 'title' && value) {
-        const titleEl = component.querySelector('.dialog-title, .card-title, .response-title, .result-title, .empty-state-title');
-        if (titleEl) {
-          titleEl.textContent = value;
-        }
-      } else if (key === 'onConfirm' && typeof value === 'function') {
-        const confirmBtn = component.querySelector('.dialog-confirm');
-        if (confirmBtn) {
-          confirmBtn.addEventListener('click', value);
-        }
-      } else if (key === 'onCancel' && typeof value === 'function') {
-        const cancelBtn = component.querySelector('.dialog-cancel');
-        if (cancelBtn) {
-          cancelBtn.addEventListener('click', value);
-        }
-      } else if (key === 'onClose' && typeof value === 'function') {
-        const closeBtn = component.querySelector('.dialog-close, .toast-close');
-        if (closeBtn) {
-          closeBtn.addEventListener('click', value);
-        }
-      } else if (key === 'confirmText' && value) {
-        const confirmBtn = component.querySelector('.dialog-confirm');
-        if (confirmBtn) {
-          confirmBtn.textContent = value;
-        }
-      } else if (key === 'cancelText' && value) {
-        const cancelBtn = component.querySelector('.dialog-cancel');
-        if (cancelBtn) {
-          cancelBtn.textContent = value;
-        }
-      } else if (key === 'message' && value) {
-        const messageEl = component.querySelector('.snackbar-message, .toast-message, .alert-message, .loading-text');
-        if (messageEl) {
-          messageEl.textContent = value;
-        }
-      } else if (key === 'icon' && value) {
-        const iconEl = component.querySelector('.toast-icon, .alert-icon, .empty-state-icon .material-icons');
-        if (iconEl) {
-          iconEl.textContent = value;
-        }
-      } else if (key === 'action' && typeof value === 'object') {
-        const actionBtn = component.querySelector('.snackbar-action, .empty-state-action');
-        if (actionBtn && value.text) {
-          actionBtn.textContent = value.text;
-          if (value.onClick && typeof value.onClick === 'function') {
-            actionBtn.addEventListener('click', value.onClick);
-          }
-        }
-      } else if (key === 'tabs' && Array.isArray(value)) {
-        this.setupTabs(component, value);
-      } else if (key === 'systemInfo' && typeof value === 'object') {
-        this.setupSystemInfo(component, value);
-      } else if (key === 'documentInfo' && typeof value === 'object') {
-        this.setupDocumentInfo(component, value);
-      } else if (key === 'resultInfo' && typeof value === 'object') {
-        this.setupResultInfo(component, value);
-      } else if (key === 'responseInfo' && typeof value === 'object') {
-        this.setupResponseInfo(component, value);
-      } else if (key === 'chips' && Array.isArray(value)) {
-        this.setupChips(component, value);
-      } else if (key === 'className' && value) {
-        component.classList.add(...value.split(' '));
-      }
-    }
-    
-    return component;
-  }
-  
-  /**
-   * タブコンポーネントをセットアップします
-   * @param {HTMLElement} component タブコンポーネント
-   * @param {Array} tabs タブ情報の配列
-   */
-  static setupTabs(component, tabs) {
-    const tabsList = component.querySelector('.tabs-list');
-    const tabsContent = component.querySelector('.tabs-content');
-    
-    if (!tabsList || !tabsContent) return;
-    
-    // タブとパネルをクリア
-    tabsList.innerHTML = '';
-    tabsContent.innerHTML = '';
-    
-    // タブとパネルを作成
-    tabs.forEach((tab, index) => {
-      // タブ作成
-      const tabTemplate = this.templates['tab-item'];
-      const tabClone = document.importNode(tabTemplate.content, true);
-      const tabElement = tabClone.firstElementChild;
+  initDialogComponents: function() {
+    // ダイアログ表示関数をグローバルに公開
+    window.showDialog = function(options) {
+      const dialogTemplate = document.getElementById('dialog-template');
+      if (!dialogTemplate) return;
       
-      tabElement.textContent = tab.label;
-      tabElement.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
-      tabElement.setAttribute('id', `tab-${index}`);
-      tabElement.setAttribute('aria-controls', `panel-${index}`);
-      
-      if (index === 0) {
-        tabElement.classList.add('active');
-      }
-      
-      // パネル作成
-      const panelTemplate = this.templates['tab-panel'];
-      const panelClone = document.importNode(panelTemplate.content, true);
-      const panelElement = panelClone.firstElementChild;
-      
-      if (typeof tab.content === 'string') {
-        panelElement.innerHTML = tab.content;
-      } else if (tab.content instanceof HTMLElement) {
-        panelElement.appendChild(tab.content);
-      }
-      
-      panelElement.setAttribute('id', `panel-${index}`);
-      panelElement.setAttribute('aria-labelledby', `tab-${index}`);
-      
-      if (index === 0) {
-        panelElement.classList.add('active');
-      } else {
-        panelElement.style.display = 'none';
-      }
-      
-      // クリックイベント
-      tabElement.addEventListener('click', () => {
-        // アクティブなタブとパネルを非アクティブにする
-        const activeTab = tabsList.querySelector('.tab-item.active');
-        const activePanel = tabsContent.querySelector('.tab-panel.active');
-        
-        if (activeTab) {
-          activeTab.classList.remove('active');
-          activeTab.setAttribute('aria-selected', 'false');
-        }
-        
-        if (activePanel) {
-          activePanel.classList.remove('active');
-          activePanel.style.display = 'none';
-        }
-        
-        // 選択されたタブとパネルをアクティブにする
-        tabElement.classList.add('active');
-        tabElement.setAttribute('aria-selected', 'true');
-        
-        panelElement.classList.add('active');
-        panelElement.style.display = 'block';
-        
-        // コールバックがあれば実行
-        if (tab.onActivate && typeof tab.onActivate === 'function') {
-          tab.onActivate(index, panelElement);
-        }
-      });
-      
-      // タブとパネルを追加
-      tabsList.appendChild(tabElement);
-      tabsContent.appendChild(panelElement);
-    });
-  }
-  
-  /**
-   * システム情報コンポーネントをセットアップします
-   * @param {HTMLElement} component システム情報コンポーネント
-   * @param {Object} info システム情報
-   */
-  static setupSystemInfo(component, info) {
-    // 基本情報
-    const statusEl = component.querySelector('.system-status');
-    const versionEl = component.querySelector('.system-version');
-    const updatedEl = component.querySelector('.system-updated');
-    const componentsEl = component.querySelector('.system-components');
-    const documentCountEl = component.querySelector('.system-document-count');
-    const chunkCountEl = component.querySelector('.system-chunk-count');
-    const templateCountEl = component.querySelector('.system-template-count');
-    
-    if (statusEl) statusEl.textContent = info.status || 'Unknown';
-    if (versionEl) versionEl.textContent = info.version || '1.0.0';
-    if (updatedEl && info.timestamp) updatedEl.textContent = new Date(info.timestamp).toLocaleString();
-    
-    // コンポーネント情報
-    if (componentsEl && info.components) {
-      componentsEl.innerHTML = '';
-      
-      for (const [name, status] of Object.entries(info.components)) {
-        const li = document.createElement('li');
-        const statusIcon = status ? '✅' : '❌';
-        li.innerHTML = `<strong>${name}:</strong> ${statusIcon}`;
-        componentsEl.appendChild(li);
-      }
-    }
-    
-    // 詳細情報
-    if (info.details) {
-      if (documentCountEl) documentCountEl.textContent = info.details.document_count || 0;
-      if (chunkCountEl) chunkCountEl.textContent = info.details.chunk_count || 0;
-      if (templateCountEl) templateCountEl.textContent = info.details.template_count || 0;
-    }
-  }
-  
-  /**
-   * ドキュメント情報コンポーネントをセットアップします
-   * @param {HTMLElement} component ドキュメント情報コンポーネント
-   * @param {Object} info ドキュメント情報
-   */
-  static setupDocumentInfo(component, info) {
-    const titleEl = component.querySelector('.document-title');
-    const categoryEl = component.querySelector('.document-category');
-    const languageEl = component.querySelector('.document-language');
-    const formatEl = component.querySelector('.document-format');
-    const updatedEl = component.querySelector('.document-updated');
-    const contentEl = component.querySelector('.document-content');
-    
-    if (titleEl) titleEl.textContent = info.title || 'Untitled';
-    if (categoryEl) categoryEl.textContent = info.category || 'Uncategorized';
-    if (languageEl) languageEl.textContent = info.language || 'Unknown';
-    if (formatEl) formatEl.textContent = info.format || 'Unknown';
-    
-    if (updatedEl && info.last_updated) {
-      updatedEl.textContent = new Date(info.last_updated).toLocaleString();
-    }
-    
-    if (contentEl) {
-      contentEl.innerHTML = info.content || info.snippet || 'No content available';
-    }
-  }
-  
-  /**
-   * 検索結果情報コンポーネントをセットアップします
-   * @param {HTMLElement} component 結果コンポーネント
-   * @param {Object} info 結果情報
-   */
-  static setupResultInfo(component, info) {
-    const titleEl = component.querySelector('.result-title');
-    const categoryEl = component.querySelector('.result-category');
-    const contentEl = component.querySelector('.result-content');
-    const relevanceEl = component.querySelector('.result-relevance');
-    const languageEl = component.querySelector('.result-language');
-    
-    if (titleEl) titleEl.textContent = info.title || 'Untitled Document';
-    if (categoryEl) categoryEl.textContent = info.category || 'General';
-    if (contentEl) contentEl.textContent = info.snippet || info.content || 'No preview available';
-    
-    if (relevanceEl && info.relevance_score) {
-      const relevanceText = typeof TranslationManager !== 'undefined' && TranslationManager.getTranslation ? 
-        TranslationManager.getTranslation('relevance') : 'Relevance';
-      relevanceEl.textContent = `${relevanceText}: ${Math.round(info.relevance_score * 100)}%`;
-    }
-    
-    if (languageEl) languageEl.textContent = info.language || 'Unknown';
-    
-    // クリックイベント
-    if (info.onClick && typeof info.onClick === 'function') {
-      component.addEventListener('click', () => info.onClick(info));
-    }
-  }
-  
-  /**
-   * レスポンス情報コンポーネントをセットアップします
-   * @param {HTMLElement} component レスポンスコンポーネント
-   * @param {Object} info レスポンス情報
-   */
-  static setupResponseInfo(component, info) {
-    const titleEl = component.querySelector('.response-title');
-    const contentEl = component.querySelector('.response-content');
-    const languageEl = component.querySelector('.response-language');
-    const timeEl = component.querySelector('.response-time');
-    
-    // レスポンスタイプの取得
-    const responseType = info.response_type || 'standard';
-    
-    // タイトル設定
-    if (titleEl) {
-      const responseText = typeof TranslationManager !== 'undefined' && TranslationManager.getTranslation ? 
-        TranslationManager.getTranslation('response') : 'Response';
-      titleEl.textContent = `${responseText} (${responseType})`;
-    }
-    
-    // コンテンツ設定（マークダウンをHTMLに変換）
-    if (contentEl && info.content) {
-      if (typeof UIController !== 'undefined' && UIController.convertMarkdownToHtml) {
-        contentEl.innerHTML = UIController.convertMarkdownToHtml(info.content);
-      } else {
-        contentEl.innerHTML = info.content;
-      }
-    }
-    
-    // メタ情報
-    if (languageEl) languageEl.textContent = info.language || 'Unknown';
-    
-    if (timeEl && info.generation_time_ms) {
-      const time = (info.generation_time_ms / 1000).toFixed(2);
-      timeEl.textContent = `${time}s`;
-    }
-  }
-  
-  /**
-   * チップコンポーネントをセットアップします
-   * @param {HTMLElement} container チップを追加するコンテナ
-   * @param {Array} chips チップ情報の配列
-   */
-  static setupChips(container, chips) {
-    // コンテナをクリア
-    container.innerHTML = '';
-    
-    // チップを作成
-    chips.forEach(chip => {
-      const isFilter = chip.type === 'filter';
-      const templateName = isFilter ? 'filter-chip' : 'chip';
-      
-      const chipElement = this.create(templateName, {
-        className: chip.className || ''
-      });
-      
-      // ラベル設定
-      const labelEl = chipElement.querySelector('.chip-label');
-      if (labelEl) {
-        labelEl.textContent = chip.label;
-      }
-      
-      // フィルターチップではない場合は閉じるボタンを設定
-      if (!isFilter) {
-        const closeBtn = chipElement.querySelector('.chip-close');
-        if (closeBtn && chip.onRemove && typeof chip.onRemove === 'function') {
-          closeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            chip.onRemove(chip);
-          });
-        }
-      }
-      
-      // クリックイベント
-      if (chip.onClick && typeof chip.onClick === 'function') {
-        chipElement.addEventListener('click', () => chip.onClick(chip));
-      }
-      
-      // 選択状態の設定
-      if (chip.selected) {
-        chipElement.classList.add('selected');
-      }
-      
-      // コンテナに追加
-      container.appendChild(chipElement);
-    });
-  }
-  
-  /**
-   * ダイアログを表示します
-   * @param {HTMLElement} dialog ダイアログ要素
-   * @return {Promise} ダイアログの結果を返すPromise
-   */
-  static showDialog(dialog) {
-    return new Promise((resolve) => {
-      // ダイアログコンテナを作成（存在しない場合）
-      let dialogContainer = document.getElementById('dialog-container');
-      if (!dialogContainer) {
-        dialogContainer = document.createElement('div');
-        dialogContainer.id = 'dialog-container';
-        dialogContainer.className = 'modal-container';
-        
-        // バックドロップを作成
-        const backdrop = document.createElement('div');
-        backdrop.className = 'modal-backdrop';
-        
-        // バックドロップクリックでダイアログを閉じる
-        backdrop.addEventListener('click', () => {
-          this.hideDialog();
-          resolve({ action: 'dismiss' });
-        });
-        
-        dialogContainer.appendChild(backdrop);
-        document.body.appendChild(dialogContainer);
-      }
-      
-      // 既存のダイアログを削除
-      const existingDialog = dialogContainer.querySelector('.dialog-container');
+      // 既存のダイアログがあれば削除
+      const existingDialog = document.querySelector('.md-dialog');
       if (existingDialog) {
         existingDialog.remove();
       }
       
-      // 新しいダイアログを追加
-      dialogContainer.appendChild(dialog);
+      // ダイアログを作成
+      const dialog = document.importNode(dialogTemplate.content, true).querySelector('.md-dialog');
       
-      // 閉じるボタンのイベント
-      const closeBtn = dialog.querySelector('.dialog-close');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-          this.hideDialog();
-          resolve({ action: 'close' });
-        });
-      }
+      // ダイアログの内容を設定
+      dialog.querySelector('.md-dialog-title').textContent = options.title || 'ダイアログ';
+      dialog.querySelector('.md-dialog-content').innerHTML = options.content || '';
+      dialog.querySelector('.md-dialog-cancel').textContent = options.cancelText || 'キャンセル';
+      dialog.querySelector('.md-dialog-confirm').textContent = options.confirmText || '確認';
       
-      // キャンセルボタンのイベント
-      const cancelBtn = dialog.querySelector('.dialog-cancel');
-      if (cancelBtn) {
-        cancelBtn.addEventListener('click', () => {
-          this.hideDialog();
-          resolve({ action: 'cancel' });
-        });
-      }
+      // キャンセルボタンの表示・非表示
+      dialog.querySelector('.md-dialog-cancel').style.display = options.showCancel === false ? 'none' : 'block';
       
-      // 確認ボタンのイベント（オリジナルのイベントを保持）
-      const confirmBtn = dialog.querySelector('.dialog-confirm');
-      if (confirmBtn) {
-        const originalOnClick = confirmBtn.onclick;
-        confirmBtn.onclick = (e) => {
-          if (originalOnClick) {
-            originalOnClick.call(confirmBtn, e);
-          }
-          this.hideDialog();
-          resolve({ action: 'confirm' });
-        };
-      }
+      // 確認ボタンの表示・非表示
+      dialog.querySelector('.md-dialog-confirm').style.display = options.showConfirm === false ? 'none' : 'block';
+      
+      // イベントハンドラを設定
+      dialog.querySelector('.md-dialog-close').addEventListener('click', function() {
+        dialog.remove();
+        if (typeof options.onClose === 'function') options.onClose();
+      });
+      
+      dialog.querySelector('.md-dialog-cancel').addEventListener('click', function() {
+        dialog.remove();
+        if (typeof options.onCancel === 'function') options.onCancel();
+      });
+      
+      dialog.querySelector('.md-dialog-confirm').addEventListener('click', function() {
+        if (typeof options.onConfirm === 'function') options.onConfirm();
+        if (options.closeOnConfirm !== false) dialog.remove();
+      });
       
       // ダイアログを表示
-      dialogContainer.style.display = 'block';
+      document.body.appendChild(dialog);
       
-      // スクロールを無効化
-      document.body.style.overflow = 'hidden';
-      
-      // ESCキーでダイアログを閉じる
-      const keyHandler = (e) => {
-        if (e.key === 'Escape') {
-          this.hideDialog();
-          resolve({ action: 'dismiss' });
-          document.removeEventListener('keydown', keyHandler);
-        }
-      };
-      
-      document.addEventListener('keydown', keyHandler);
-    });
-  }
-  
-  /**
-   * ダイアログを非表示にします
-   */
-  static hideDialog() {
-    const dialogContainer = document.getElementById('dialog-container');
-    if (dialogContainer) {
-      dialogContainer.style.display = 'none';
-      
-      // スクロールを有効化
-      document.body.style.overflow = '';
-    }
-  }
-  
-  /**
-   * スナックバーを表示します
-   * @param {Object} options スナックバーオプション
-   * @param {string} options.message メッセージ
-   * @param {Object} options.action アクション情報
-   * @param {number} options.duration 表示時間（ミリ秒）
-   */
-  static showSnackbar(options) {
-    const { message, action, duration = 5000 } = options;
-    
-    // スナックバーコンテナを作成（存在しない場合）
-    let snackbarContainer = document.getElementById('snackbar-container');
-    if (!snackbarContainer) {
-      snackbarContainer = document.createElement('div');
-      snackbarContainer.id = 'snackbar-container';
-      document.body.appendChild(snackbarContainer);
-    }
-    
-    // 既存のスナックバーを削除
-    const existingSnackbar = snackbarContainer.querySelector('.snackbar');
-    if (existingSnackbar) {
-      existingSnackbar.remove();
-    }
-    
-    // スナックバーを作成
-    const snackbar = this.create('snackbar', {
-      message: message,
-      action: action
-    });
-    
-    // スナックバーを表示
-    snackbarContainer.appendChild(snackbar);
-    
-    // アニメーション
-    setTimeout(() => {
-      snackbar.classList.add('show');
-    }, 10);
-    
-    // 一定時間後に非表示
-    const timeout = setTimeout(() => {
-      this.hideSnackbar(snackbar);
-    }, duration);
-    
-    // スナックバーにタイムアウトIDを保存
-    snackbar._timeoutId = timeout;
-    
-    return snackbar;
-  }
-  
-  /**
-   * スナックバーを非表示にします
-   * @param {HTMLElement} snackbar スナックバー要素
-   */
-  static hideSnackbar(snackbar) {
-    if (!snackbar) {
-      const snackbarContainer = document.getElementById('snackbar-container');
-      if (snackbarContainer) {
-        snackbar = snackbarContainer.querySelector('.snackbar');
-      }
-    }
-    
-    if (snackbar) {
-      // タイムアウトをクリア
-      if (snackbar._timeoutId) {
-        clearTimeout(snackbar._timeoutId);
-      }
-      
-      // アニメーション
-      snackbar.classList.remove('show');
-      
-      // 削除
+      // アニメーションのためのクラスを追加
       setTimeout(() => {
-        snackbar.remove();
-      }, 300);
-    }
-  }
+        dialog.classList.add('md-dialog-open');
+      }, 10);
+      
+      // ダイアログ要素を返す
+      return dialog;
+    };
+  },
   
   /**
-   * トーストを表示します
-   * @param {Object} options トーストオプション
-   * @param {string} options.message メッセージ
-   * @param {string} options.icon アイコン
-   * @param {string} options.type トーストタイプ ('info', 'success', 'warning', 'error')
-   * @param {number} options.duration 表示時間（ミリ秒）
+   * スナックバーコンポーネントを初期化
    */
-  static showToast(options) {
-    const { message, icon, type = 'info', duration = 3000 } = options;
-    
-    // アイコンマッピング
-    const iconMap = {
-      info: 'info',
-      success: 'check_circle',
-      warning: 'warning',
-      error: 'error'
+  initSnackbarComponents: function() {
+    // スナックバー表示関数をグローバルに公開
+    window.showSnackbar = function(options) {
+      const snackbarTemplate = document.getElementById('snackbar-template');
+      if (!snackbarTemplate) return;
+      
+      // 既存のスナックバーを削除
+      const existingSnackbar = document.querySelector('.md-snackbar');
+      if (existingSnackbar) {
+        existingSnackbar.remove();
+      }
+      
+      // スナックバーを作成
+      const snackbar = document.importNode(snackbarTemplate.content, true).querySelector('.md-snackbar');
+      
+      // スナックバーの内容を設定
+      snackbar.querySelector('.md-snackbar-message').textContent = options.message || '';
+      
+      // アクションボタンの設定
+      const actionButton = snackbar.querySelector('.md-snackbar-button');
+      if (options.actionText) {
+        actionButton.textContent = options.actionText;
+        actionButton.style.display = 'block';
+        actionButton.addEventListener('click', function() {
+          if (typeof options.onAction === 'function') options.onAction();
+          snackbar.remove();
+        });
+      } else {
+        actionButton.style.display = 'none';
+      }
+      
+      // スナックバーを表示
+      document.body.appendChild(snackbar);
+      
+      // アニメーションのためのクラスを追加
+      setTimeout(() => {
+        snackbar.classList.add('md-snackbar-show');
+      }, 10);
+      
+      // 自動的に閉じる
+      const duration = options.duration || 4000;
+      const timeout = setTimeout(() => {
+        snackbar.classList.remove('md-snackbar-show');
+        setTimeout(() => {
+          snackbar.remove();
+        }, 300);
+      }, duration);
+      
+      // スナックバー要素を返す
+      return snackbar;
     };
+  },
+  
+  /**
+   * 検索結果カードを作成
+   * @param {Object} result 検索結果データ
+   * @return {HTMLElement} 検索結果カード要素
+   */
+  createSearchResultCard: function(result) {
+    const template = document.getElementById('search-result-card-template');
+    if (!template) return null;
     
-    // トーストコンテナを作成（存在しない場合）
-    let toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-      toastContainer = document.createElement('div');
-      toastContainer.id = 'toast-container';
-      document.body.appendChild(toastContainer);
+    const card = document.importNode(template.content, true).querySelector('.result-card');
+    
+    // カードの内容を設定
+    card.querySelector('.result-title').textContent = result.title || 'Untitled Document';
+    card.querySelector('.result-category').textContent = result.category || 'General';
+    card.querySelector('.result-snippet p').textContent = result.snippet || result.content || 'No preview available';
+    
+    // 関連度スコアを設定
+    const relevanceScore = Math.round(result.relevance_score * 100);
+    const relevanceElement = card.querySelector('.result-relevance');
+    relevanceElement.textContent = `Relevance: ${relevanceScore}%`;
+    
+    // 言語を設定
+    card.querySelector('.result-language').textContent = result.language || 'Unknown language';
+    
+    // 結果IDを設定
+    if (result.id) {
+      card.setAttribute('data-result-id', result.id);
     }
     
-    // トーストを作成
-    const toast = this.create('toast', {
-      message: message,
-      icon: icon || iconMap[type],
-      className: `toast-${type}`
+    return card;
+  },
+  
+  /**
+   * レスポンスカードを作成
+   * @param {Object} response レスポンスデータ
+   * @return {HTMLElement} レスポンスカード要素
+   */
+  createResponseCard: function(response) {
+    const template = document.getElementById('response-card-template');
+    if (!template) return null;
+    
+    const card = document.importNode(template.content, true).querySelector('.response-card');
+    
+    // カードの内容を設定
+    card.querySelector('.response-title').textContent = `Response (${response.response_type || 'standard'})`;
+    
+    // マークダウンをHTMLに変換してコンテンツを設定
+    const responseHtml = this.convertMarkdownToHtml(response.content || '');
+    card.querySelector('.response-content').innerHTML = responseHtml;
+    
+    // メタ情報を設定
+    card.querySelector('.response-language').textContent = response.language || 'Unknown language';
+    
+    // 生成時間を設定
+    const generationTime = response.generation_time_ms / 1000;
+    card.querySelector('.response-time').textContent = `${generationTime.toFixed(2)}s`;
+    
+    // コピーボタンのイベントハンドラを設定
+    card.querySelector('.response-copy').addEventListener('click', function() {
+      // テキストのみのコンテンツを取得
+      const textContent = response.content || '';
+      
+      // クリップボードにコピー
+      navigator.clipboard.writeText(textContent).then(function() {
+        // コピー成功時のフィードバック
+        window.showSnackbar({ message: 'コピーしました' });
+      }).catch(function(err) {
+        // コピー失敗時のフィードバック
+        window.showSnackbar({ message: 'コピーに失敗しました' });
+        console.error('コピーに失敗しました:', err);
+      });
     });
     
-    // 閉じるボタンのイベント
-    const closeBtn = toast.querySelector('.toast-close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        this.hideToast(toast);
+    // 共有ボタンのイベントハンドラを設定
+    card.querySelector('.response-share').addEventListener('click', function() {
+      // 共有処理（現在は簡易メッセージを表示）
+      window.showSnackbar({ message: '共有機能は準備中です' });
+    });
+    
+    // フィードバックボタンのイベントハンドラを設定
+    card.querySelector('.response-feedback').addEventListener('click', function() {
+      // フィードバックダイアログを表示
+      ComponentsUtils.showFeedbackDialog(response);
+    });
+    
+    return card;
+  },
+  
+  /**
+   * マークダウンをHTMLに変換
+   * @param {string} markdown マークダウンテキスト
+   * @return {string} HTML
+   */
+  convertMarkdownToHtml: function(markdown) {
+    if (!markdown) return '';
+    
+    let html = markdown;
+    
+    // ヘッダー
+    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+    html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+    
+    // 強調とイタリック
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // コード
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    
+    // コードブロック
+    html = html.replace(/```([^`]*?)```/gs, function(match, code) {
+      return `<pre><code>${code.trim()}</code></pre>`;
+    });
+    
+    // リンク
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    
+    // リスト処理
+    // 箇条書きリスト
+    const bulletListPattern = /^(\s*)-\s+(.*?)(?=^(?:\s*)-|^(?:\s*)\d+\.|$)/gms;
+    html = html.replace(bulletListPattern, (match, indent, items) => {
+      const listItems = items.trim().split(/\n\s*-\s+/).map(item => `<li>${item.trim()}</li>`).join('');
+      return `<ul>${listItems}</ul>`;
+    });
+    
+    // 番号付きリスト
+    const numberedListPattern = /^(\s*)\d+\.\s+(.*?)(?=^(?:\s*)-|^(?:\s*)\d+\.|$)/gms;
+    html = html.replace(numberedListPattern, (match, indent, items) => {
+      const listItems = items.trim().split(/\n\s*\d+\.\s+/).map(item => `<li>${item.trim()}</li>`).join('');
+      return `<ol>${listItems}</ol>`;
+    });
+    
+    // 引用
+    html = html.replace(/^>\s*(.*$)/gim, '<blockquote>$1</blockquote>');
+    
+    // 隣接する同じ種類のリストを結合
+    html = html.replace(/<\/ul>\s*<ul>/g, '');
+    html = html.replace(/<\/ol>\s*<ol>/g, '');
+    
+    // 隣接する同じ種類の引用を結合
+    html = html.replace(/<\/blockquote>\s*<blockquote>/g, '<br>');
+    
+    // 段落（他のマークダウン要素に一致しないテキスト）
+    html = html.replace(/^(?!<[a-z])(.*$)/gim, '<p>$1</p>');
+    
+    // 空の段落を削除
+    html = html.replace(/<p><\/p>/g, '');
+    
+    return html;
+  },
+  
+  /**
+   * ドキュメント詳細ダイアログを表示
+   * @param {Object} document ドキュメントデータ
+   */
+  showDocumentDetailDialog: function(document) {
+    const template = document.getElementById('document-detail-template');
+    if (!template) return;
+    
+    const content = document.importNode(template.content, true);
+    
+    // 多言語対応のためのテキスト
+    const language = document.language || window.AppConfig?.language || 'ja';
+    const isEnglish = language === 'en';
+    
+    // テキストの設定
+    content.querySelector('.document-info-title').textContent = isEnglish ? 'Document Information' : 'ドキュメント情報';
+    content.querySelector('.document-title-label').textContent = isEnglish ? 'Title:' : 'タイトル:';
+    content.querySelector('.document-category-label').textContent = isEnglish ? 'Category:' : 'カテゴリ:';
+    content.querySelector('.document-language-label').textContent = isEnglish ? 'Language:' : '言語:';
+    content.querySelector('.document-format-label').textContent = isEnglish ? 'Format:' : '形式:';
+    content.querySelector('.document-updated-label').textContent = isEnglish ? 'Last Updated:' : '最終更新:';
+    content.querySelector('.document-content-title').textContent = isEnglish ? 'Content' : 'コンテンツ';
+    
+    // ドキュメント情報の設定
+    content.querySelector('.document-title-value').textContent = document.title || (isEnglish ? 'Untitled' : '無題');
+    content.querySelector('.document-category-value').textContent = document.category || (isEnglish ? 'Uncategorized' : '未分類');
+    content.querySelector('.document-language-value').textContent = document.language || (isEnglish ? 'Unknown' : '不明');
+    content.querySelector('.document-format-value').textContent = document.format || (isEnglish ? 'Unknown' : '不明');
+    
+    // 日付の整形
+    const updated = document.last_updated ? new Date(document.last_updated).toLocaleString() : (isEnglish ? 'Unknown' : '不明');
+    content.querySelector('.document-updated-value').textContent = updated;
+    
+    // コンテンツの設定
+    content.querySelector('.document-content').textContent = document.content || document.snippet || (isEnglish ? 'No content available' : 'コンテンツがありません');
+    
+    // ダイアログを表示
+    window.showDialog({
+      title: document.title || (isEnglish ? 'Document Details' : 'ドキュメント詳細'),
+      content: content.querySelector('.document-details').outerHTML,
+      showCancel: false,
+      showConfirm: false
+    });
+  },
+  
+  /**
+   * フィードバックダイアログを表示
+   * @param {Object} response フィードバック対象のレスポンス
+   */
+  showFeedbackDialog: function(response) {
+    const template = document.getElementById('feedback-dialog-template');
+    if (!template) return;
+    
+    const content = document.importNode(template.content, true);
+    
+    // 多言語対応のためのテキスト
+    const language = response.language || window.AppConfig?.language || 'ja';
+    const isEnglish = language === 'en';
+    
+    // テキストの設定
+    content.querySelector('.feedback-question').textContent = isEnglish ? 'How helpful was this response?' : 'この回答は役に立ちましたか？';
+    content.querySelector('.feedback-comment-label').textContent = isEnglish ? 'Additional comments (optional):' : '追加コメント（任意）:';
+    
+    // ダイアログを表示
+    const dialog = window.showDialog({
+      title: isEnglish ? 'Feedback' : 'フィードバック',
+      content: content.querySelector('.feedback-form').outerHTML,
+      confirmText: isEnglish ? 'Submit' : '送信',
+      cancelText: isEnglish ? 'Cancel' : 'キャンセル',
+      onConfirm: function() {
+        // フィードバックの送信処理
+        const ratingButtons = document.querySelectorAll('.rating-button');
+        let selectedRating = 0;
+        
+        ratingButtons.forEach(button => {
+          if (button.classList.contains('selected')) {
+            selectedRating = parseInt(button.getAttribute('data-rating'));
+          }
+        });
+        
+        const commentInput = document.getElementById('feedback-comment-input');
+        const comment = commentInput ? commentInput.value : '';
+        
+        // フィードバックデータの作成
+        const feedbackData = {
+          response_id: response.id,
+          rating: selectedRating,
+          comment: comment,
+          timestamp: new Date().toISOString()
+        };
+        
+        // フィードバックの送信（実際の送信処理はここに実装）
+        console.log('Feedback data:', feedbackData);
+        
+        // 送信完了メッセージ
+        window.showSnackbar({
+          message: isEnglish ? 'Thank you for your feedback!' : 'フィードバックをありがとうございます！'
+        });
+      }
+    });
+    
+    // 評価ボタンのイベントハンドラを設定
+    const ratingButtons = dialog.querySelectorAll('.rating-button');
+    ratingButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // 選択状態をリセット
+        ratingButtons.forEach(btn => {
+          btn.classList.remove('selected');
+        });
+        
+        // クリックされたボタンを選択状態に
+        button.classList.add('selected');
+      });
+    });
+  },
+  
+  /**
+   * ヘルプダイアログを表示
+   */
+  showHelpDialog: function() {
+    const template = document.getElementById('help-content-template');
+    if (!template) return;
+    
+    const content = document.importNode(template.content, true);
+    
+    // 多言語対応のためのテキスト
+    const language = window.AppConfig?.language || 'ja';
+    const isEnglish = language === 'en';
+    
+    // テキストの設定（言語に応じて）
+    if (isEnglish) {
+      content.querySelector('.help-section-title-basic').textContent = 'Basic Search';
+      content.querySelector('.help-basic-search-text').textContent = 'Enter your question in the search box and click the search button or press Enter.';
+      content.querySelector('.help-category-text').textContent = 'You can select a specific category to narrow down the search results.';
+      
+      content.querySelector('.help-section-title-response').textContent = 'Response Types';
+      content.querySelector('.help-response-types-text').textContent = 'You can select different response formats:';
+      
+      content.querySelector('.help-standard-title').textContent = 'Standard:';
+      content.querySelector('.help-standard-text').textContent = 'A general response format';
+      content.querySelector('.help-email-title').textContent = 'Email:';
+      content.querySelector('.help-email-text').textContent = 'Formatted like an email response';
+      content.querySelector('.help-prep-title').textContent = 'PREP:';
+      content.querySelector('.help-prep-text').textContent = 'Point, Reason, Example, Proposal format';
+      content.querySelector('.help-detailed-title').textContent = 'Detailed:';
+      content.querySelector('.help-detailed-text').textContent = 'In-depth response with more information';
+      
+      content.querySelector('.help-section-title-api').textContent = 'Gemini API Key';
+      content.querySelector('.help-api-text-1').textContent = 'You can optionally provide your own Gemini API key for enhanced performance.';
+      content.querySelector('.help-api-text-2').textContent = 'Your API key is stored locally on your device and is never sent to our servers.';
+      
+      content.querySelector('.help-section-title-advanced').textContent = 'Advanced Settings';
+      content.querySelector('.help-advanced-text').textContent = 'You can customize the search behavior:';
+      
+      content.querySelector('.help-semantic-title').textContent = 'Semantic Search Weight:';
+      content.querySelector('.help-semantic-text').textContent = 'Adjust the importance of meaning-based search';
+      content.querySelector('.help-keyword-title').textContent = 'Keyword Search Weight:';
+      content.querySelector('.help-keyword-text').textContent = 'Adjust the importance of keyword matching';
+      content.querySelector('.help-expand-title').textContent = 'Expand Search Query:';
+      content.querySelector('.help-expand-text').textContent = 'Include related terms in the search';
+      content.querySelector('.help-cache-title').textContent = 'Use Cache:';
+      content.querySelector('.help-cache-text').textContent = 'Use cached results for faster responses';
+    } else {
+      content.querySelector('.help-section-title-basic').textContent = '基本的な検索';
+      content.querySelector('.help-basic-search-text').textContent = '検索ボックスに質問を入力し、検索ボタンをクリックするかEnterキーを押します。';
+      content.querySelector('.help-category-text').textContent = '特定のカテゴリを選択して、検索結果を絞り込むことができます。';
+      
+      content.querySelector('.help-section-title-response').textContent = '回答タイプ';
+      content.querySelector('.help-response-types-text').textContent = '異なる回答フォーマットを選択できます：';
+      
+      content.querySelector('.help-standard-title').textContent = '標準：';
+      content.querySelector('.help-standard-text').textContent = '一般的な回答フォーマット';
+      content.querySelector('.help-email-title').textContent = 'メール：';
+      content.querySelector('.help-email-text').textContent = 'メール返信形式でフォーマット';
+      content.querySelector('.help-prep-title').textContent = 'PREP形式：';
+      content.querySelector('.help-prep-text').textContent = 'ポイント、理由、例示、提案のフォーマット';
+      content.querySelector('.help-detailed-title').textContent = '詳細：';
+      content.querySelector('.help-detailed-text').textContent = 'より詳しい情報を含む詳細な回答';
+      
+      content.querySelector('.help-section-title-api').textContent = 'Gemini APIキー';
+      content.querySelector('.help-api-text-1').textContent = 'パフォーマンスを向上させるために、独自のGemini APIキーを任意で提供できます。';
+      content.querySelector('.help-api-text-2').textContent = 'APIキーはデバイスに保存され、サーバーに送信されることはありません。';
+      
+      content.querySelector('.help-section-title-advanced').textContent = '詳細設定';
+      content.querySelector('.help-advanced-text').textContent = '検索動作をカスタマイズできます：';
+      
+      content.querySelector('.help-semantic-title').textContent = 'セマンティック検索の重み：';
+      content.querySelector('.help-semantic-text').textContent = '意味に基づく検索の重要度を調整';
+      content.querySelector('.help-keyword-title').textContent = 'キーワード検索の重み：';
+      content.querySelector('.help-keyword-text').textContent = 'キーワード一致の重要度を調整';
+      content.querySelector('.help-expand-title').textContent = '検索クエリを拡張：';
+      content.querySelector('.help-expand-text').textContent = '関連する用語を検索に含める';
+      content.querySelector('.help-cache-title').textContent = 'キャッシュを使用：';
+      content.querySelector('.help-cache-text').textContent = '高速な応答のためにキャッシュされた結果を使用';
+    }
+    
+    // ダイアログを表示
+    window.showDialog({
+      title: isEnglish ? 'Help' : 'ヘルプ',
+      content: content.querySelector('.help-content').outerHTML,
+      showCancel: false,
+      showConfirm: false
+    });
+  },
+  
+  /**
+   * システム情報ダイアログを表示
+   * @param {Object} healthInfo システム健全性情報
+   */
+  showSystemInfoDialog: function(healthInfo) {
+    const template = document.getElementById('system-info-template');
+    if (!template) return;
+    
+    const content = document.importNode(template.content, true);
+    
+    // 多言語対応のためのテキスト
+    const language = window.AppConfig?.language || 'ja';
+    const isEnglish = language === 'en';
+    
+    // テキストの設定
+    content.querySelector('.about-system-title').textContent = isEnglish ? 'System Information' : 'システム情報';
+    content.querySelector('.about-status-label').textContent = isEnglish ? 'Status:' : 'ステータス:';
+    content.querySelector('.about-version-label').textContent = isEnglish ? 'Version:' : 'バージョン:';
+    content.querySelector('.about-updated-label').textContent = isEnglish ? 'Last Updated:' : '最終更新:';
+    
+    content.querySelector('.about-components-title').textContent = isEnglish ? 'Components' : 'コンポーネント';
+    
+    content.querySelector('.about-details-title').textContent = isEnglish ? 'System Details' : 'システム詳細';
+    content.querySelector('.about-document-count-label').textContent = isEnglish ? 'Document Count:' : 'ドキュメント数:';
+    content.querySelector('.about-chunk-count-label').textContent = isEnglish ? 'Chunk Count:' : 'チャンク数:';
+    content.querySelector('.about-template-count-label').textContent = isEnglish ? 'Template Count:' : 'テンプレート数:';
+    
+    // システム情報の設定
+    content.querySelector('.about-status-value').textContent = healthInfo.status || (isEnglish ? 'Unknown' : '不明');
+    content.querySelector('.about-version-value').textContent = healthInfo.version || window.AppConfig?.version || '1.0.0';
+    
+    // 日付の整形
+    const updated = healthInfo.timestamp ? new Date(healthInfo.timestamp).toLocaleString() : (isEnglish ? 'Unknown' : '不明');
+    content.querySelector('.about-updated-value').textContent = updated;
+    
+    // コンポーネント状態の設定
+    const componentsList = content.querySelector('.about-components-list');
+    if (healthInfo.components) {
+      Object.entries(healthInfo.components).forEach(([component, status]) => {
+        const li = document.createElement('li');
+        const statusIcon = status ? '✅' : '❌';
+        const componentName = isEnglish ? component : component === 'database' ? 'データベース' :
+                              component === 'cache' ? 'キャッシュ' :
+                              component === 'search' ? '検索' :
+                              component === 'response' ? '応答' : component;
+        li.innerHTML = `<strong>${componentName}:</strong> ${statusIcon}`;
+        componentsList.appendChild(li);
       });
     }
     
-    // トーストを表示
-    toastContainer.appendChild(toast);
-    
-    // アニメーション
-    setTimeout(() => {
-      toast.classList.add('show');
-    }, 10);
-    
-    // 一定時間後に非表示
-    const timeout = setTimeout(() => {
-      this.hideToast(toast);
-    }, duration);
-    
-    // トーストにタイムアウトIDを保存
-    toast._timeoutId = timeout;
-    
-    return toast;
-  }
-  
-  /**
-   * トーストを非表示にします
-   * @param {HTMLElement} toast トースト要素
-   */
-  static hideToast(toast) {
-    if (!toast) return;
-    
-    // タイムアウトをクリア
-    if (toast._timeoutId) {
-      clearTimeout(toast._timeoutId);
+    // 詳細情報の設定（存在する場合）
+    const detailsSection = content.querySelector('.about-details-section');
+    if (healthInfo.details) {
+      content.querySelector('.about-document-count-value').textContent = healthInfo.details.document_count || 0;
+      content.querySelector('.about-chunk-count-value').textContent = healthInfo.details.chunk_count || 0;
+      content.querySelector('.about-template-count-value').textContent = healthInfo.details.template_count || 0;
+      detailsSection.style.display = 'block';
+    } else {
+      detailsSection.style.display = 'none';
     }
     
-    // アニメーション
-    toast.classList.remove('show');
+    // ダイアログを表示
+    window.showDialog({
+      title: isEnglish ? 'System Information' : 'システム情報',
+      content: content.querySelector('.about-content').outerHTML,
+      showCancel: false,
+      showConfirm: false
+    });
+  },
+  
+  /**
+   * タブコンポーネントを作成
+   * @param {Array} tabs タブ定義の配列 [{id, label, content}]
+   * @param {string} containerId タブを配置するコンテナのID
+   */
+  createTabs: function(tabs, containerId) {
+    const template = document.getElementById('tabs-template');
+    if (!template) return;
     
-    // 削除
-    setTimeout(() => {
-      toast.remove();
-    }, 300);
+    const tabsElement = document.importNode(template.content, true).querySelector('.md-tabs');
+    const tabsContainer = tabsElement.querySelector('.md-tabs-container');
+    const tabsContent = tabsElement.querySelector('.md-tabs-content');
+    
+    // タブを作成
+    tabs.forEach((tab, index) => {
+      // タブボタンを作成
+      const tabButton = document.createElement('button');
+      tabButton.className = 'md-tab-button';
+      tabButton.textContent = tab.label;
+      tabButton.setAttribute('data-tab-id', tab.id);
+      
+      // 最初のタブをアクティブに
+      if (index === 0) {
+        tabButton.classList.add('active');
+      }
+      
+      // タブコンテンツを作成
+      const tabContent = document.createElement('div');
+      tabContent.className = 'md-tab-content';
+      tabContent.setAttribute('data-tab-id', tab.id);
+      tabContent.innerHTML = tab.content;
+      
+      // 最初のタブコンテンツを表示
+      if (index === 0) {
+        tabContent.classList.add('active');
+      }
+      
+      // タブボタンのクリックイベント
+      tabButton.addEventListener('click', function() {
+        // すべてのタブからアクティブクラスを削除
+        tabsContainer.querySelectorAll('.md-tab-button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // すべてのコンテンツからアクティブクラスを削除
+        tabsContent.querySelectorAll('.md-tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        // クリックされたタブとそのコンテンツをアクティブに
+        tabButton.classList.add('active');
+        tabsContent.querySelector(`.md-tab-content[data-tab-id="${tab.id}"]`).classList.add('active');
+      });
+      
+      // タブとコンテンツを追加
+      tabsContainer.appendChild(tabButton);
+      tabsContent.appendChild(tabContent);
+    });
+    
+    // 作成したタブをコンテナに追加
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.appendChild(tabsElement);
+    }
+    
+    return tabsElement;
+  },
+  
+  /**
+   * ファイルアップロードコンポーネントを初期化
+   * @param {string} containerId アップロードコンポーネントを配置するコンテナのID
+   * @param {Object} options オプション設定
+   * @return {HTMLElement} ファイルアップロードコンポーネント要素
+   */
+  initFileUpload: function(containerId, options = {}) {
+    const template = document.getElementById('file-upload-template');
+    if (!template) return null;
+    
+    const uploadComponent = document.importNode(template.content, true).querySelector('.md-file-upload');
+    
+    // 多言語対応のためのテキスト
+    const language = window.AppConfig?.language || 'ja';
+    const isEnglish = language === 'en';
+    
+    // デフォルトオプション
+    const defaultOptions = {
+      accept: '*/*',
+      multiple: false,
+      maxSize: 25 * 1024 * 1024, // 25MB
+      onUpload: null,
+      onFileSelect: null,
+      acceptedFormats: isEnglish ? 'All files are allowed' : 'すべてのファイルが許可されています'
+    };
+    
+    // オプションをマージ
+    const mergedOptions = { ...defaultOptions, ...options };
+    
+    // テキストの設定
+    uploadComponent.querySelector('.md-file-upload-message').textContent = 
+      isEnglish ? 'Drag and drop files here or click to upload' : 'ここにファイルをドラッグ＆ドロップするか、クリックしてアップロード';
+    uploadComponent.querySelector('.md-file-upload-formats').textContent = mergedOptions.acceptedFormats;
+    uploadComponent.querySelector('.md-file-upload-selected').textContent = 
+      isEnglish ? 'Selected files:' : '選択されたファイル:';
+    uploadComponent.querySelector('.md-file-upload-button').textContent = 
+      isEnglish ? 'Upload' : 'アップロード';
+    uploadComponent.querySelector('.md-file-clear-button').textContent = 
+      isEnglish ? 'Clear' : 'クリア';
+    
+    // 選択ファイルリストを初期で非表示
+    uploadComponent.querySelector('.md-file-upload-files').style.display = 'none';
+    
+    // ファイル入力の設定
+    const fileInput = uploadComponent.querySelector('.md-file-upload-input');
+    fileInput.setAttribute('accept', mergedOptions.accept);
+    fileInput.multiple = mergedOptions.multiple;
+    
+    // ドロップエリアのクリックイベント
+    const dropArea = uploadComponent.querySelector('.md-file-upload-drop-area');
+    dropArea.addEventListener('click', function() {
+      fileInput.click();
+    });
+    
+    // ドラッグ＆ドロップイベント
+    dropArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dropArea.classList.add('dragover');
+    });
+    
+    dropArea.addEventListener('dragleave', function() {
+      dropArea.classList.remove('dragover');
+    });
+    
+    dropArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dropArea.classList.remove('dragover');
+      
+      if (e.dataTransfer.files.length > 0) {
+        handleFiles(e.dataTransfer.files);
+      }
+    });
+    
+    // ファイル選択イベント
+    fileInput.addEventListener('change', function() {
+      if (fileInput.files.length > 0) {
+        handleFiles(fileInput.files);
+      }
+    });
+    
+    // ファイルリストクリアボタン
+    const clearButton = uploadComponent.querySelector('.md-file-clear-button');
+    clearButton.addEventListener('click', function() {
+      clearFileList();
+    });
+    
+    // アップロードボタン
+    const uploadButton = uploadComponent.querySelector('.md-file-upload-button');
+    uploadButton.addEventListener('click', function() {
+      if (fileInput.files.length > 0 && typeof mergedOptions.onUpload === 'function') {
+        mergedOptions.onUpload(fileInput.files);
+      }
+    });
+    
+    // ファイルリストをクリア
+    function clearFileList() {
+      fileInput.value = '';
+      const fileList = uploadComponent.querySelector('.md-file-upload-list');
+      fileList.innerHTML = '';
+      uploadComponent.querySelector('.md-file-upload-files').style.display = 'none';
+    }
+    
+    // ファイル処理
+    function handleFiles(files) {
+      const fileList = uploadComponent.querySelector('.md-file-upload-list');
+      fileList.innerHTML = '';
+      
+      let hasValidFiles = false;
+      let hasInvalidFiles = false;
+      
+      Array.from(files).forEach(file => {
+        const fileSize = file.size;
+        const isValidSize = fileSize <= mergedOptions.maxSize;
+        
+        const fileItem = document.createElement('div');
+        fileItem.className = 'md-file-item';
+        
+        // ファイルアイコンを選択（タイプに応じて）
+        let fileIcon = 'description';
+        if (file.type.startsWith('image/')) {
+          fileIcon = 'image';
+        } else if (file.type.startsWith('video/')) {
+          fileIcon = 'videocam';
+        } else if (file.type.startsWith('audio/')) {
+          fileIcon = 'audiotrack';
+        } else if (file.type.includes('pdf')) {
+          fileIcon = 'picture_as_pdf';
+        } else if (file.type.includes('spreadsheet') || file.name.endsWith('.xlsx') || file.name.endsWith('.csv')) {
+          fileIcon = 'table_chart';
+        } else if (file.type.includes('presentation') || file.name.endsWith('.pptx')) {
+          fileIcon = 'slideshow';
+        }
+        
+        fileItem.innerHTML = `
+          <span class="material-icons md-file-icon">${fileIcon}</span>
+          <div class="md-file-info">
+            <div class="md-file-name">${file.name}</div>
+            <div class="md-file-meta">
+              <span class="md-file-size">${formatFileSize(fileSize)}</span>
+              ${!isValidSize ? `<span class="md-file-error">${isEnglish ? 'File too large' : 'ファイルが大きすぎます'}</span>` : ''}
+            </div>
+          </div>
+          <button class="md-icon-button md-file-remove" aria-label="Remove">
+            <span class="material-icons">close</span>
+          </button>
+        `;
+        
+        // 無効なファイルの場合はクラスを追加
+        if (!isValidSize) {
+          fileItem.classList.add('invalid');
+          hasInvalidFiles = true;
+        } else {
+          hasValidFiles = true;
+        }
+        
+        // 削除ボタンのイベント
+        const removeButton = fileItem.querySelector('.md-file-remove');
+        removeButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          fileItem.remove();
+          
+          // ファイルリストが空になったら非表示
+          if (fileList.children.length === 0) {
+            uploadComponent.querySelector('.md-file-upload-files').style.display = 'none';
+          }
+        });
+        
+        fileList.appendChild(fileItem);
+      });
+      
+      // ファイルリストを表示
+      if (fileList.children.length > 0) {
+        uploadComponent.querySelector('.md-file-upload-files').style.display = 'block';
+      }
+      
+      // アップロードボタンの有効/無効を設定
+      uploadButton.disabled = !hasValidFiles;
+      
+      // 無効なファイルがある場合は警告
+      if (hasInvalidFiles) {
+        const message = isEnglish ? 
+          'Some files exceed the maximum size limit of ' + formatFileSize(mergedOptions.maxSize) :
+          '一部のファイルが最大サイズ制限 ' + formatFileSize(mergedOptions.maxSize) + ' を超えています';
+        
+        window.showSnackbar({
+          message: message,
+          actionText: isEnglish ? 'Dismiss' : '閉じる'
+        });
+      }
+      
+      // ファイル選択コールバック
+      if (typeof mergedOptions.onFileSelect === 'function') {
+        mergedOptions.onFileSelect(Array.from(files).filter(file => file.size <= mergedOptions.maxSize));
+      }
+    }
+    
+    // ファイルサイズのフォーマット
+    function formatFileSize(bytes) {
+      if (bytes < 1024) {
+        return bytes + ' B';
+      } else if (bytes < 1024 * 1024) {
+        return (bytes / 1024).toFixed(1) + ' KB';
+      } else if (bytes < 1024 * 1024 * 1024) {
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+      } else {
+        return (bytes / (1024 * 1024 * 1024)).toFixed(1) + ' GB';
+      }
+    }
+    
+    // コンテナに追加
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.appendChild(uploadComponent);
+    }
+    
+    return uploadComponent;
   }
+};
+
+// DOMの読み込み完了時にコンポーネントを初期化
+document.addEventListener('DOMContentLoaded', function() {
+  ComponentsUtils.init();
+});
+</script>
+
+<!-- コンポーネント用のスタイル -->
+<style>
+/* ダイアログコンポーネントのスタイル */
+.md-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
 }
 
-// UIコンポーネント用のCSSスタイル
-const componentStyles = `
-/* ダイアログスタイル */
-.dialog {
+.md-dialog-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.md-dialog-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--md-sys-color-scrim);
+}
+
+.md-dialog-surface {
   background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
   border-radius: var(--md-sys-shape-corner-large);
   box-shadow: var(--md-sys-elevation-level3);
   width: 90%;
   max-width: 560px;
   max-height: 90vh;
   overflow-y: auto;
-  margin: 5vh auto 0;
-  animation: dialog-appear var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.8);
+  transition: transform 0.3s var(--md-sys-motion-easing-standard);
 }
 
-@keyframes dialog-appear {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.md-dialog-open .md-dialog-surface {
+  transform: scale(1);
 }
 
-.dialog-header {
+.md-dialog-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -955,507 +1177,624 @@ const componentStyles = `
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
 }
 
-.dialog-title {
+.md-dialog-title {
   font-family: var(--md-sys-typescale-title-large-font-family);
   font-size: var(--md-sys-typescale-title-large-font-size);
   font-weight: var(--md-sys-typescale-title-large-font-weight);
   margin: 0;
-  color: var(--md-sys-color-on-surface);
 }
 
-.dialog-content {
+.md-dialog-content {
   padding: 24px;
-  color: var(--md-sys-color-on-surface);
+  overflow-y: auto;
+  flex: 1;
 }
 
-.dialog-footer {
+.md-dialog-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
   padding: 16px 24px;
   border-top: 1px solid var(--md-sys-color-outline-variant);
 }
 
-/* アラートダイアログスタイル */
-.alert-dialog .dialog-content {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.alert-icon-container {
-  flex-shrink: 0;
-}
-
-.alert-icon {
-  font-size: 32px;
-}
-
-.alert-message {
-  flex: 1;
-  font-family: var(--md-sys-typescale-body-medium-font-family);
-  font-size: var(--md-sys-typescale-body-medium-font-size);
-  line-height: var(--md-sys-typescale-body-medium-line-height);
-}
-
-/* スナックバースタイル */
-#snackbar-container {
+/* スナックバーコンポーネントのスタイル */
+.md-snackbar {
   position: fixed;
-  bottom: 16px;
   left: 16px;
-  right: 16px;
-  display: flex;
-  justify-content: center;
-  z-index: 1000;
-  pointer-events: none;
-}
-
-.snackbar {
+  bottom: 16px;
+  min-width: 280px;
+  max-width: 90%;
+  padding: 14px 16px;
+  border-radius: var(--md-sys-shape-corner-small);
   background-color: var(--md-sys-color-inverse-surface);
   color: var(--md-sys-color-inverse-on-surface);
-  border-radius: var(--md-sys-shape-corner-small);
-  padding: 14px 16px;
-  min-width: 288px;
-  max-width: 568px;
-  box-shadow: var(--md-sys-elevation-level3);
+  box-shadow: var(--md-sys-elevation-level2);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  pointer-events: auto;
-  transform: translateY(100px);
+  transform: translateY(100%);
   opacity: 0;
+  z-index: 1000;
   transition: transform 0.3s var(--md-sys-motion-easing-standard),
               opacity 0.3s var(--md-sys-motion-easing-standard);
 }
 
-.snackbar.show {
+.md-snackbar-show {
   transform: translateY(0);
   opacity: 1;
 }
 
-.snackbar-message {
+.md-snackbar-message {
+  flex: 1;
   font-family: var(--md-sys-typescale-body-medium-font-family);
   font-size: var(--md-sys-typescale-body-medium-font-size);
-  line-height: var(--md-sys-typescale-body-medium-line-height);
-  flex: 1;
   margin-right: 16px;
 }
 
-.snackbar-action {
+.md-snackbar-action {
+  flex-shrink: 0;
+}
+
+.md-snackbar-button {
+  color: var(--md-sys-color-primary);
+  background-color: transparent;
+  border: none;
   font-family: var(--md-sys-typescale-label-large-font-family);
   font-size: var(--md-sys-typescale-label-large-font-size);
   font-weight: var(--md-sys-typescale-label-large-font-weight);
   text-transform: uppercase;
-  color: var(--md-sys-color-primary);
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* アイコンボタンのスタイル */
+.md-icon-button {
   background-color: transparent;
   border: none;
-  padding: 8px 12px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  border-radius: var(--md-sys-shape-corner-small);
-  transition: background-color 0.2s var(--md-sys-motion-easing-standard);
-}
-
-.snackbar-action:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* トーストスタイル */
-#toast-container {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 360px;
-}
-
-.toast {
-  background-color: var(--md-sys-color-surface-variant);
   color: var(--md-sys-color-on-surface-variant);
-  border-radius: var(--md-sys-shape-corner-medium);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: var(--md-sys-elevation-level2);
-  transform: translateX(100%);
-  opacity: 0;
-  transition: transform 0.3s var(--md-sys-motion-easing-standard),
-              opacity 0.3s var(--md-sys-motion-easing-standard);
+  transition: background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
 }
 
-.toast.show {
-  transform: translateX(0);
-  opacity: 1;
+.md-icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
-.toast-content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.dark-theme .md-icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
-.toast-icon {
-  font-size: 20px;
+/* ボタンのスタイル */
+.md-button {
+  font-family: var(--md-sys-typescale-label-large-font-family);
+  font-size: var(--md-sys-typescale-label-large-font-size);
+  font-weight: var(--md-sys-typescale-label-large-font-weight);
+  padding: 10px 24px;
+  border-radius: var(--md-sys-shape-corner-small);
+  cursor: pointer;
+  transition: all var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
 }
 
-.toast-message {
-  font-family: var(--md-sys-typescale-body-medium-font-family);
-  font-size: var(--md-sys-typescale-body-medium-font-size);
-  line-height: var(--md-sys-typescale-body-medium-line-height);
+.md-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.toast-info {
-  border-left: 4px solid var(--md-sys-color-primary);
-}
-
-.toast-info .toast-icon {
+.md-text-button {
+  background-color: transparent;
   color: var(--md-sys-color-primary);
+  border: none;
 }
 
-.toast-success {
-  border-left: 4px solid var(--md-sys-color-tertiary);
+.md-text-button:hover:not(:disabled) {
+  background-color: rgba(26, 115, 232, 0.08);
 }
 
-.toast-success .toast-icon {
-  color: var(--md-sys-color-tertiary);
+.md-outlined-button {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
 }
 
-.toast-warning {
-  border-left: 4px solid #f9a825; /* Amber */
+.md-outlined-button:hover:not(:disabled) {
+  background-color: rgba(26, 115, 232, 0.08);
 }
 
-.toast-warning .toast-icon {
-  color: #f9a825;
+.md-filled-button {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: none;
 }
 
-.toast-error {
-  border-left: 4px solid var(--md-sys-color-error);
+.md-filled-button:hover:not(:disabled) {
+  box-shadow: var(--md-sys-elevation-level1);
+  background-color: var(--md-sys-color-primary);
+  opacity: 0.9;
 }
 
-.toast-error .toast-icon {
-  color: var(--md-sys-color-error);
-}
-
-/* タブスタイル */
-.tabs {
+/* タブコンポーネントのスタイル */
+.md-tabs {
   width: 100%;
+  overflow: hidden;
 }
 
-.tabs-header {
+.md-tabs-bar {
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
 }
 
-.tabs-scroller {
+.md-tabs-scroller {
+  display: flex;
   overflow-x: auto;
   scrollbar-width: none; /* Firefox */
 }
 
-.tabs-scroller::-webkit-scrollbar {
+.md-tabs-scroller::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
 
-.tabs-list {
+.md-tabs-container {
   display: flex;
-  width: max-content;
+  flex-wrap: nowrap;
 }
 
-.tab-item {
-  padding: 12px 16px;
-  font-family: var(--md-sys-typescale-title-small-font-family);
-  font-size: var(--md-sys-typescale-title-small-font-size);
-  font-weight: var(--md-sys-typescale-title-small-font-weight);
+.md-tab-button {
   color: var(--md-sys-color-on-surface-variant);
   background-color: transparent;
   border: none;
+  padding: 12px 16px;
+  font-family: var(--md-sys-typescale-label-large-font-family);
+  font-size: var(--md-sys-typescale-label-large-font-size);
+  font-weight: var(--md-sys-typescale-label-large-font-weight);
+  white-space: nowrap;
   cursor: pointer;
   position: relative;
-  transition: color 0.2s var(--md-sys-motion-easing-standard);
+  transition: color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
 }
 
-.tab-item::after {
+.md-tab-button::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   height: 3px;
   background-color: var(--md-sys-color-primary);
   transform: scaleX(0);
-  transition: transform 0.2s var(--md-sys-motion-easing-standard);
+  transition: transform var(--md-sys-motion-duration-medium1) var(--md-sys-motion-easing-standard);
 }
 
-.tab-item.active {
+.md-tab-button.active {
   color: var(--md-sys-color-primary);
 }
 
-.tab-item.active::after {
+.md-tab-button.active::after {
   transform: scaleX(1);
 }
 
-.tab-panel {
-  padding: 24px 0;
+.md-tab-content {
+  padding: 16px;
+  display: none;
 }
 
-/* チップスタイル */
-.chip {
+.md-tab-content.active {
+  display: block;
+}
+
+/* フィードバック評価のスタイル */
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feedback-rating {
+  text-align: center;
+}
+
+.rating-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.rating-button {
+  background-color: transparent;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-medium);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.rating-button:hover {
+  background-color: var(--md-sys-color-surface-variant);
+}
+
+.rating-button.selected {
+  background-color: var(--md-sys-color-primary-container);
+  border-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-primary);
+}
+
+.rating-button .material-icons {
+  font-size: 24px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.rating-button.selected .material-icons {
+  color: var(--md-sys-color-primary);
+}
+
+.feedback-comment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feedback-comment-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--md-sys-shape-corner-small);
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  resize: vertical;
+}
+
+.feedback-comment-input:focus {
+  border-color: var(--md-sys-color-primary);
+  outline: none;
+}
+
+/* テンプレートカードのスタイル */
+.template-card {
+  cursor: pointer;
+  transition: transform var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+              box-shadow var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.template-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--md-sys-elevation-level2);
+}
+
+.template-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.template-title {
+  font-family: var(--md-sys-typescale-title-medium-font-family);
+  font-size: var(--md-sys-typescale-title-medium-font-size);
+  font-weight: var(--md-sys-typescale-title-medium-font-weight);
+  margin: 0;
+}
+
+.template-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-radius: var(--md-sys-shape-corner-small);
+  font-family: var(--md-sys-typescale-label-small-font-family);
+  font-size: var(--md-sys-typescale-label-small-font-size);
+  font-weight: var(--md-sys-typescale-label-small-font-weight);
+}
+
+.template-description {
+  margin-bottom: 12px;
+  color: var(--md-sys-color-on-surface);
+}
+
+.template-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-family: var(--md-sys-typescale-body-small-font-family);
+  font-size: var(--md-sys-typescale-body-small-font-size);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.template-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ファイルアップロードのスタイル */
+.md-file-upload {
+  width: 100%;
+  border: 2px dashed var(--md-sys-color-outline);
+  border-radius: var(--md-sys-shape-corner-medium);
+  padding: 16px;
+  background-color: var(--md-sys-color-surface);
+}
+
+.md-file-upload-drop-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+  border-radius: var(--md-sys-shape-corner-small);
+  background-color: var(--md-sys-color-surface-variant);
+  cursor: pointer;
+  transition: background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.md-file-upload-drop-area:hover,
+.md-file-upload-drop-area.dragover {
+  background-color: var(--md-sys-color-primary-container);
+}
+
+.md-file-upload-icon {
+  font-size: 48px;
+  color: var(--md-sys-color-primary);
+  margin-bottom: 16px;
+}
+
+.md-file-upload-message {
+  font-family: var(--md-sys-typescale-body-large-font-family);
+  font-size: var(--md-sys-typescale-body-large-font-size);
+  margin-bottom: 8px;
+}
+
+.md-file-upload-formats {
+  font-family: var(--md-sys-typescale-body-small-font-family);
+  font-size: var(--md-sys-typescale-body-small-font-size);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.md-file-upload-files {
+  margin-top: 16px;
+}
+
+.md-file-upload-selected {
+  font-family: var(--md-sys-typescale-label-medium-font-family);
+  font-size: var(--md-sys-typescale-label-medium-font-size);
+  font-weight: var(--md-sys-typescale-label-medium-font-weight);
+  margin-bottom: 8px;
+}
+
+.md-file-upload-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.md-file-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: var(--md-sys-shape-corner-small);
+  background-color: var(--md-sys-color-surface-variant);
+}
+
+.md-file-item.invalid {
+  background-color: var(--md-sys-color-error-container);
+}
+
+.md-file-icon {
+  margin-right: 12px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.md-file-info {
+  flex: 1;
+}
+
+.md-file-name {
+  font-family: var(--md-sys-typescale-body-medium-font-family);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.md-file-meta {
+  display: flex;
+  gap: 16px;
+  font-family: var(--md-sys-typescale-body-small-font-family);
+  font-size: var(--md-sys-typescale-body-small-font-size);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.md-file-error {
+  color: var(--md-sys-color-error);
+}
+
+.md-file-upload-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* チップコンポーネントのスタイル */
+.md-chip {
   display: inline-flex;
   align-items: center;
-  height: 32px;
+  padding: 6px 12px;
   border-radius: 16px;
-  padding: 0 12px;
   background-color: var(--md-sys-color-surface-variant);
   color: var(--md-sys-color-on-surface-variant);
   font-family: var(--md-sys-typescale-label-large-font-family);
   font-size: var(--md-sys-typescale-label-large-font-size);
-  font-weight: var(--md-sys-typescale-label-large-font-weight);
-  margin: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s var(--md-sys-motion-easing-standard);
+  margin-right: 8px;
+  margin-bottom: 8px;
 }
 
-.chip:hover {
-  background-color: var(--md-sys-color-surface);
-}
-
-.chip.selected {
-  background-color: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
-}
-
-.chip-label {
+.md-chip-text {
   margin-right: 4px;
 }
 
-.chip-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.md-chip-remove {
   width: 20px;
   height: 20px;
-  background: none;
-  border: none;
-  border-radius: 50%;
   padding: 0;
-  cursor: pointer;
   color: var(--md-sys-color-on-surface-variant);
-  transition: background-color 0.2s var(--md-sys-motion-easing-standard);
 }
 
-.chip-close:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+.md-chip-remove .material-icons {
+  font-size: 16px;
 }
 
-.filter-chip {
-  background-color: transparent;
-  border: 1px solid var(--md-sys-color-outline);
+/* プログレスインジケーターのスタイル */
+.md-linear-progress {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  position: relative;
 }
 
-.filter-chip.selected {
-  background-color: var(--md-sys-color-secondary-container);
-  border-color: var(--md-sys-color-secondary);
-}
-
-/* 空の状態スタイル */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px;
-  text-align: center;
-}
-
-.empty-state-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+.md-linear-progress-track {
   background-color: var(--md-sys-color-surface-variant);
-  margin-bottom: 24px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-.empty-state-icon .material-icons {
-  font-size: 48px;
-  color: var(--md-sys-color-on-surface-variant);
+.md-linear-progress-indicator {
+  background-color: var(--md-sys-color-primary);
+  height: 100%;
+  width: 100%;
+  animation: indeterminate 2s infinite linear;
+  transform-origin: 0% 50%;
 }
 
-.empty-state-title {
-  font-family: var(--md-sys-typescale-headline-small-font-family);
-  font-size: var(--md-sys-typescale-headline-small-font-size);
-  font-weight: var(--md-sys-typescale-headline-small-font-weight);
-  color: var(--md-sys-color-on-surface);
-  margin-bottom: 8px;
-}
-
-.empty-state-description {
-  font-family: var(--md-sys-typescale-body-large-font-family);
-  font-size: var(--md-sys-typescale-body-large-font-size);
-  color: var(--md-sys-color-on-surface-variant);
-  margin-bottom: 24px;
-  max-width: 400px;
-}
-
-.empty-state-action {
-  margin-top: 16px;
-}
-
-/* ローディングスタイル */
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(26, 115, 232, 0.2);
-  border-top: 4px solid var(--md-sys-color-primary);
-  border-radius: 50%;
-  margin-bottom: 16px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.loading-text {
-  font-family: var(--md-sys-typescale-body-medium-font-family);
-  font-size: var(--md-sys-typescale-body-medium-font-size);
-  color: var(--md-sys-color-on-surface-variant);
-}
-
-/* ドキュメント詳細スタイル */
-.document-details {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.document-section {
-  border-bottom: 1px solid var(--md-sys-color-outline-variant);
-  padding-bottom: 16px;
-}
-
-.document-section:last-child {
-  border-bottom: none;
-}
-
-.section-title {
-  font-family: var(--md-sys-typescale-title-medium-font-family);
-  font-size: var(--md-sys-typescale-title-medium-font-size);
-  font-weight: var(--md-sys-typescale-title-medium-font-weight);
-  color: var(--md-sys-color-on-surface);
-  margin-bottom: 16px;
-}
-
-.document-info {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-@media (min-width: 480px) {
-  .document-info {
-    grid-template-columns: repeat(2, 1fr);
+@keyframes indeterminate {
+  0% {
+    transform: translateX(-100%) scaleX(0.5);
+  }
+  40% {
+    transform: translateX(0%) scaleX(0.5);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.5);
   }
 }
 
-.info-item {
+/* ドキュメント詳細のスタイル */
+.document-details {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 16px;
 }
 
-.info-item dt {
-  font-family: var(--md-sys-typescale-label-medium-font-family);
-  font-size: var(--md-sys-typescale-label-medium-font-size);
-  font-weight: var(--md-sys-typescale-label-medium-font-weight);
-  color: var(--md-sys-color-on-surface-variant);
+.document-section {
+  margin-bottom: 16px;
 }
 
-.info-item dd {
-  font-family: var(--md-sys-typescale-body-medium-font-family);
-  font-size: var(--md-sys-typescale-body-medium-font-size);
-  color: var(--md-sys-color-on-surface);
-  margin: 0;
+.document-section h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-family: var(--md-sys-typescale-title-medium-font-family);
+  font-size: var(--md-sys-typescale-title-medium-font-size);
+  font-weight: var(--md-sys-typescale-title-medium-font-weight);
 }
 
 .document-content {
-  max-height: 400px;
-  overflow-y: auto;
+  background-color: var(--md-sys-color-surface-variant);
   padding: 16px;
   border-radius: var(--md-sys-shape-corner-small);
-  background-color: var(--md-sys-color-surface-variant);
-  color: var(--md-sys-color-on-surface);
-  font-family: var(--md-sys-typescale-body-medium-font-family);
-  font-size: var(--md-sys-typescale-body-medium-font-size);
-  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  font-family: monospace;
+  line-height: 1.5;
 }
 
-/* ヘルプコンテンツスタイル */
-.help-content, .about-content {
+/* ヘルプコンテンツのスタイル */
+.help-content {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.help-section, .about-section {
-  border-bottom: 1px solid var(--md-sys-color-outline-variant);
-  padding-bottom: 16px;
-}
-
-.help-section:last-child, .about-section:last-child {
-  border-bottom: none;
-}
-
-.help-section h3, .about-section h3 {
-  font-family: var(--md-sys-typescale-title-medium-font-family);
-  font-size: var(--md-sys-typescale-title-medium-font-size);
-  font-weight: var(--md-sys-typescale-title-medium-font-weight);
-  color: var(--md-sys-color-on-surface);
-  margin-bottom: 12px;
-}
-
-.help-section p, .about-section p {
-  font-family: var(--md-sys-typescale-body-medium-font-family);
-  font-size: var(--md-sys-typescale-body-medium-font-size);
-  color: var(--md-sys-color-on-surface);
-  margin-bottom: 12px;
-  line-height: 1.6;
-}
-
-.help-section p:last-child, .about-section p:last-child {
-  margin-bottom: 0;
-}
-
-.help-section ul, .about-section ul {
-  margin-left: 24px;
+.help-section {
   margin-bottom: 16px;
 }
 
-.help-section li, .about-section li {
-  font-family: var(--md-sys-typescale-body-medium-font-family);
-  font-size: var(--md-sys-typescale-body-medium-font-size);
-  color: var(--md-sys-color-on-surface);
-  margin-bottom: 8px;
-  line-height: 1.6;
+.help-section h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-family: var(--md-sys-typescale-title-medium-font-family);
+  font-size: var(--md-sys-typescale-title-medium-font-size);
+  font-weight: var(--md-sys-typescale-title-medium-font-weight);
 }
 
-/* レスポンシブスタイル */
+.help-section p {
+  margin-bottom: 8px;
+}
+
+.help-section ul {
+  padding-left: 24px;
+}
+
+.help-section li {
+  margin-bottom: 8px;
+}
+
+/* システム情報のスタイル */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.about-section {
+  margin-bottom: 16px;
+}
+
+.about-section h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-family: var(--md-sys-typescale-title-medium-font-family);
+  font-size: var(--md-sys-typescale-title-medium-font-size);
+  font-weight: var(--md-sys-typescale-title-medium-font-weight);
+}
+
+.about-components-list {
+  padding-left: 24px;
+}
+
+.about-components-list li {
+  margin-bottom: 8px;
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 768px) {
+  .md-dialog-surface {
+    width: 95%;
+  }
+  
+  .rating-buttons {
+    gap: 8px;
+  }
+  
+  .rating-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 @media (max-width: 480px) {
-  .dialog {
+  .md-dialog-surface {
     width: 100%;
     height: 100%;
     max-height: 100vh;
@@ -1463,74 +1802,9 @@ const componentStyles = `
     border-radius: 0;
   }
   
-  .dialog-content {
-    max-height: calc(100vh - 130px);
-  }
-  
-  #toast-container {
-    left: 16px;
-    right: 16px;
-    max-width: none;
-  }
-  
-  .toast {
-    width: 100%;
+  .rating-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
-`;
-
-// コンポーネントスタイルをページに追加
-(function() {
-  const styleElement = document.createElement('style');
-  styleElement.textContent = componentStyles;
-  document.head.appendChild(styleElement);
-})();
-
-// DOMContentLoadedイベントでコンポーネントマネージャーを初期化
-document.addEventListener('DOMContentLoaded', () => {
-  ComponentManager.init();
-});
-
-/**
- * 多言語対応ユーティリティクラス
- * UIの翻訳をサポートします
- */
-class TranslationManager {
-  /**
-   * 翻訳データを設定します
-   * @param {Object} translations 翻訳データ
-   */
-  static setTranslations(translations) {
-    this.translations = translations || {};
-  }
-  
-  /**
-   * 現在の言語を設定します
-   * @param {string} language 言語コード
-   */
-  static setLanguage(language) {
-    this.language = language || 'en';
-  }
-  
-  /**
-   * 翻訳テキストを取得します
-   * @param {string} key 翻訳キー
-   * @return {string} 翻訳テキスト
-   */
-  static getTranslation(key) {
-    const translations = this.translations[this.language] || this.translations.en || {};
-    return translations[key] || key;
-  }
-  
-  /**
-   * 現在の言語を取得します
-   * @return {string} 現在の言語コード
-   */
-  static getLanguage() {
-    return this.language || 'en';
-  }
-}
-
-// 初期化
-TranslationManager.setLanguage('ja');
-</script>
+</style>
