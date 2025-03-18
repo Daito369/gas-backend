@@ -1,0 +1,1481 @@
+/**
+ * RAG 2.0 クライアントサイドJavaScript
+ * Material Design 3に準拠したUIの動作と、WebApi.gsとの通信を担当
+ */
+
+// アプリケーション設定
+const AppConfig = {
+  apiEndpoint: '',             // APIエンドポイント（初期化時に設定）
+  geminiApiKey: '',            // Gemini API キー
+  language: 'ja',              // 現在の言語設定
+  responseType: 'standard',    // レスポンスタイプ
+  categories: [],              // カテゴリ一覧
+  semanticWeight: 0.7,         // セマンティック検索の重み
+  keywordWeight: 0.3,          // キーワード検索の重み
+  expandQuery: true,           // クエリ拡張の有効/無効
+  useCache: true,              // キャッシュの使用有効/無効
+  isDarkMode: false,           // ダークモード設定
+  templates: [],               // レスポンステンプレート
+  version: '1.0.0',            // アプリケーションバージョン
+  translations: {              // 多言語対応テキスト
+    ja: {
+      search: '検索',
+      search_placeholder: 'サポートに関する質問を入力してください',
+      category: 'カテゴリ',
+      category_all: 'すべて',
+      response_type: '回答形式',
+      api_key: 'Gemini API キー',
+      api_key_placeholder: 'API キーを入力（省略可）',
+      semantic_weight: 'セマンティック検索の重み',
+      keyword_weight: 'キーワード検索の重み',
+      expand_query: '検索クエリを拡張する',
+      use_cache: 'キャッシュを使用する',
+      advanced_settings: '詳細設定',
+      loading: '検索中...',
+      error_title: 'エラー',
+      no_results: '検索結果が見つかりませんでした。別のキーワードをお試しください。',
+      results: '検索結果',
+      search_results: '検索結果',
+      response: '回答',
+      help: 'ヘルプ',
+      about: 'システム情報',
+      confirm: '確認',
+      cancel: 'キャンセル',
+      close: '閉じる'
+    },
+    en: {
+      search: 'Search',
+      search_placeholder: 'Enter your support question',
+      category: 'Category',
+      category_all: 'All',
+      response_type: 'Response Type',
+      api_key: 'Gemini API Key',
+      api_key_placeholder: 'Enter API key (optional)',
+      semantic_weight: 'Semantic Search Weight',
+      keyword_weight: 'Keyword Search Weight',
+      expand_query: 'Expand Search Query',
+      use_cache: 'Use Cache',
+      advanced_settings: 'Advanced Settings',
+      loading: 'Searching...',
+      error_title: 'Error',
+      no_results: 'No search results found. Please try different keywords.',
+      results: 'Results',
+      search_results: 'Search Results',
+      response: 'Response',
+      help: 'Help',
+      about: 'System Info',
+      confirm: 'Confirm',
+      cancel: 'Cancel',
+      close: 'Close'
+    }
+  }
+};
+
+// DOM要素の参照
+const DOM = {
+  // 初期化時に設定される
+};
+
+// WebAPI通信ユーティリティ
+const ApiService = {
+  /**
+   * API通信をセットアップ
+   */
+  init() {
+    // APIエンドポイントを現在のURLから設定
+    AppConfig.apiEndpoint = window.location.href.split('?')[0];
+    console.log('API endpoint initialized:', AppConfig.apiEndpoint);
+  },
+
+  /**
+   * GETリクエストを送信
+   * @param {string} endpoint エンドポイントパス
+   * @param {Object} params クエリパラメータ
+   * @return {Promise<Object>} レスポンス
+   */
+  async get(endpoint, params = {}) {
+    try {
+      // パラメータをURLクエリ文字列に変換
+      const queryString = Object.entries(params)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .join('&');
+      
+      const url = `${AppConfig.apiEndpoint}${endpoint}${queryString ? '?' + queryString : ''}`;
+      
+      // リクエスト送信
+      const response = await fetch(url);
+      
+      // レスポンス検証
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error?.message || `API error: ${response.status}`);
+      }
+      
+      // JSONレスポンスを解析
+      const data = await response.json();
+      
+      if (!data.success) {
+        throw new Error(data.error?.message || 'API request failed');
+      }
+      
+      return data.data;
+    } catch (error) {
+      console.error('API GET request failed:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * POSTリクエストを送信
+   * @param {string} type リクエストタイプ
+   * @param {Object} params パラメータ
+   * @return {Promise<Object>} レスポンス
+   */
+  async post(type, params = {}) {
+    try {
+      // APIキーを追加（存在する場合）
+      if (AppConfig.geminiApiKey) {
+        params.api_key = AppConfig.geminiApiKey;
+      }
+      
+      // リクエストタイプを追加
+      params.type = type;
+      
+      // FormDataを作成
+      const formData = new URLSearchParams();
+      for (const [key, value] of Object.entries(params)) {
+        formData.append(key, value);
+      }
+      
+      // リクエスト送信
+      const response = await fetch(AppConfig.apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData.toString()
+      });
+      
+      // レスポンス検証
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error?.message || `API error: ${response.status}`);
+      }
+      
+      // JSONレスポンスを解析
+      const data = await response.json();
+      
+      if (!data.success) {
+        throw new Error(data.error?.message || 'API request failed');
+      }
+      
+      return data.data;
+    } catch (error) {
+      console.error(`API ${type} request failed:`, error);
+      throw error;
+    }
+  },
+
+  /**
+   * 設定データを取得
+   * @return {Promise<Object>} 設定データ
+   */
+  async getConfig() {
+    try {
+      return await this.get('?view=config');
+    } catch (error) {
+      console.error('Failed to load configuration:', error);
+      return {};
+    }
+  },
+
+  /**
+   * テンプレート一覧を取得
+   * @param {string} type テンプレートタイプ（省略可）
+   * @param {string} language 言語（省略可）
+   * @return {Promise<Array>} テンプレート一覧
+   */
+  async getTemplates(type = '', language = '') {
+    try {
+      const params = {};
+      if (type) params.template_type = type;
+      if (language) params.language = language;
+      
+      return await this.post('get_templates', params);
+    } catch (error) {
+      console.error('Failed to load templates:', error);
+      return [];
+    }
+  },
+
+  /**
+   * カテゴリ一覧を取得
+   * @return {Promise<Array>} カテゴリ一覧
+   */
+  async getCategories() {
+    try {
+      return await this.post('get_categories');
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+      return [];
+    }
+  },
+
+  /**
+   * 検索を実行
+   * @param {string} query 検索クエリ
+   * @param {Object} options 検索オプション
+   * @return {Promise<Object>} 検索結果
+   */
+  async search(query, options = {}) {
+    // 検索パラメータを構築
+    const params = {
+      query: query,
+      language: options.language || AppConfig.language,
+      category: options.category || '',
+      limit: options.limit || 10,
+      expand_query: options.expandQuery !== undefined ? options.expandQuery : AppConfig.expandQuery,
+      semantic_weight: options.semanticWeight || AppConfig.semanticWeight,
+      keyword_weight: options.keywordWeight || AppConfig.keywordWeight,
+      use_cache: options.useCache !== undefined ? options.useCache : AppConfig.useCache
+    };
+    
+    return await this.post('search', params);
+  },
+
+  /**
+   * レスポンス生成を実行
+   * @param {string} query 検索クエリ
+   * @param {Object} searchResults 検索結果
+   * @param {Object} options オプション
+   * @return {Promise<Object>} 生成されたレスポンス
+   */
+  async generateResponse(query, searchResults, options = {}) {
+    // レスポンス生成パラメータを構築
+    const params = {
+      query: query,
+      search_results_id: searchResults.result_id,
+      response_type: options.responseType || AppConfig.responseType,
+      language: options.language || AppConfig.language,
+      template_id: options.templateId || '',
+      enhance_with_gemini: options.enhanceWithGemini !== undefined ? options.enhanceWithGemini : true
+    };
+    
+    if (options.customParams) {
+      params.custom_params = JSON.stringify(options.customParams);
+    }
+    
+    return await this.post('generate_response', params);
+  },
+
+  /**
+   * ドキュメントを取得
+   * @param {string} documentId ドキュメントID
+   * @param {string} language 言語（省略可）
+   * @return {Promise<Object>} ドキュメント
+   */
+  async getDocument(documentId, language = '') {
+    const params = {
+      document_id: documentId
+    };
+    
+    if (language) {
+      params.language = language;
+    }
+    
+    return await this.post('get_document', params);
+  },
+
+  /**
+   * ヘルスチェックを実行
+   * @param {boolean} detailed 詳細情報を含めるかどうか
+   * @return {Promise<Object>} ヘルスチェック結果
+   */
+  async healthCheck(detailed = false) {
+    const params = {
+      detailed: detailed ? 'true' : 'false'
+    };
+    
+    return await this.post('health_check', params);
+  }
+};
+
+// UIコントローラー
+const UIController = {
+  /**
+   * UI要素の初期設定
+   */
+  init() {
+    // DOM要素の参照を取得
+    this.collectDOMElements();
+    
+    // イベントリスナーを設定
+    this.setupEventListeners();
+    
+    // ダークモードの初期設定
+    this.initTheme();
+    
+    // UIの言語更新
+    this.updateUILanguage();
+  },
+
+  /**
+   * DOM要素の参照を収集
+   */
+  collectDOMElements() {
+    // ヘッダー要素
+    DOM.themeSwitch = document.getElementById('theme-switch');
+    DOM.languageSelect = document.getElementById('language-select');
+    
+    // 検索フォーム要素
+    DOM.searchForm = document.getElementById('search-form');
+    DOM.queryInput = document.getElementById('query-input');
+    DOM.categorySelect = document.getElementById('category-select');
+    DOM.responseTypeSelect = document.getElementById('response-type-select');
+    DOM.apiKeyInput = document.getElementById('api-key-input');
+    DOM.toggleApiKey = document.getElementById('toggle-api-key');
+    DOM.semanticWeight = document.getElementById('semantic-weight');
+    DOM.semanticWeightValue = document.getElementById('semantic-weight-value');
+    DOM.keywordWeight = document.getElementById('keyword-weight');
+    DOM.keywordWeightValue = document.getElementById('keyword-weight-value');
+    DOM.expandQuery = document.getElementById('expand-query');
+    DOM.useCache = document.getElementById('use-cache');
+    
+    // 検索結果要素
+    DOM.loadingIndicator = document.getElementById('loading-indicator');
+    DOM.errorMessage = document.getElementById('error-message');
+    DOM.errorText = document.getElementById('error-text');
+    DOM.dismissError = document.getElementById('dismiss-error');
+    DOM.resultsSection = document.getElementById('results-section');
+    DOM.responseContainer = document.getElementById('response-container');
+    DOM.resultsTitle = document.getElementById('results-title');
+    DOM.resultsContainer = document.getElementById('results-container');
+    DOM.toggleResults = document.getElementById('toggle-results');
+    
+    // モーダル要素
+    DOM.modalContainer = document.getElementById('modal-container');
+    DOM.modalTitle = document.getElementById('modal-title');
+    DOM.modalBody = document.getElementById('modal-body');
+    DOM.modalClose = document.getElementById('modal-close');
+    DOM.modalCancel = document.getElementById('modal-cancel');
+    DOM.modalConfirm = document.getElementById('modal-confirm');
+    
+    // フッター要素
+    DOM.showHelp = document.getElementById('show-help');
+    DOM.showAbout = document.getElementById('show-about');
+    
+    // 翻訳対象テキスト要素
+    DOM.searchTitle = document.getElementById('search-title');
+  },
+
+  /**
+   * イベントリスナーを設定
+   */
+  setupEventListeners() {
+    // 検索フォーム送信
+    if (DOM.searchForm) {
+      DOM.searchForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await AppController.handleSearch();
+      });
+    }
+    
+    // ダークモード切り替え
+    if (DOM.themeSwitch) {
+      DOM.themeSwitch.addEventListener('change', () => {
+        AppConfig.isDarkMode = DOM.themeSwitch.checked;
+        this.applyTheme();
+        localStorage.setItem('dark_mode', AppConfig.isDarkMode ? 'true' : 'false');
+      });
+    }
+    
+    // 言語切り替え
+    if (DOM.languageSelect) {
+      DOM.languageSelect.addEventListener('change', () => {
+        AppConfig.language = DOM.languageSelect.value;
+        this.updateUILanguage();
+        localStorage.setItem('language', AppConfig.language);
+      });
+    }
+    
+    // APIキーの表示切り替え
+    if (DOM.toggleApiKey) {
+      DOM.toggleApiKey.addEventListener('click', () => {
+        const inputType = DOM.apiKeyInput.type;
+        DOM.apiKeyInput.type = inputType === 'password' ? 'text' : 'password';
+        
+        const iconElement = DOM.toggleApiKey.querySelector('.material-icons');
+        if (iconElement) {
+          iconElement.textContent = inputType === 'password' ? 'visibility' : 'visibility_off';
+        }
+      });
+    }
+    
+    // APIキー入力の変更
+    if (DOM.apiKeyInput) {
+      DOM.apiKeyInput.addEventListener('change', () => {
+        AppConfig.geminiApiKey = DOM.apiKeyInput.value.trim();
+        localStorage.setItem('gemini_api_key', AppConfig.geminiApiKey);
+      });
+    }
+    
+    // レスポンスタイプの選択
+    if (DOM.responseTypeSelect) {
+      DOM.responseTypeSelect.addEventListener('change', () => {
+        AppConfig.responseType = DOM.responseTypeSelect.value;
+        localStorage.setItem('response_type', AppConfig.responseType);
+      });
+    }
+    
+    // 重みスライダーの変更
+    if (DOM.semanticWeight) {
+      DOM.semanticWeight.addEventListener('input', () => {
+        const value = parseInt(DOM.semanticWeight.value);
+        AppConfig.semanticWeight = value / 100;
+        DOM.semanticWeightValue.textContent = `${value}%`;
+        
+        // キーワード検索の重みを自動調整
+        const keywordValue = 100 - value;
+        DOM.keywordWeight.value = keywordValue;
+        DOM.keywordWeightValue.textContent = `${keywordValue}%`;
+        AppConfig.keywordWeight = keywordValue / 100;
+        
+        localStorage.setItem('semantic_weight', AppConfig.semanticWeight);
+        localStorage.setItem('keyword_weight', AppConfig.keywordWeight);
+      });
+    }
+    
+    if (DOM.keywordWeight) {
+      DOM.keywordWeight.addEventListener('input', () => {
+        const value = parseInt(DOM.keywordWeight.value);
+        AppConfig.keywordWeight = value / 100;
+        DOM.keywordWeightValue.textContent = `${value}%`;
+        
+        // セマンティック検索の重みを自動調整
+        const semanticValue = 100 - value;
+        DOM.semanticWeight.value = semanticValue;
+        DOM.semanticWeightValue.textContent = `${semanticValue}%`;
+        AppConfig.semanticWeight = semanticValue / 100;
+        
+        localStorage.setItem('semantic_weight', AppConfig.semanticWeight);
+        localStorage.setItem('keyword_weight', AppConfig.keywordWeight);
+      });
+    }
+    
+    // チェックボックスの変更
+    if (DOM.expandQuery) {
+      DOM.expandQuery.addEventListener('change', () => {
+        AppConfig.expandQuery = DOM.expandQuery.checked;
+        localStorage.setItem('expand_query', AppConfig.expandQuery);
+      });
+    }
+    
+    if (DOM.useCache) {
+      DOM.useCache.addEventListener('change', () => {
+        AppConfig.useCache = DOM.useCache.checked;
+        localStorage.setItem('use_cache', AppConfig.useCache);
+      });
+    }
+    
+    // エラーメッセージ閉じるボタン
+    if (DOM.dismissError) {
+      DOM.dismissError.addEventListener('click', () => {
+        this.hideError();
+      });
+    }
+    
+    // 検索結果の折りたたみ切り替え
+    if (DOM.toggleResults) {
+      DOM.toggleResults.addEventListener('click', () => {
+        const resultsCard = DOM.toggleResults.closest('.results-card');
+        if (resultsCard) {
+          resultsCard.classList.toggle('results-collapsed');
+          
+          const iconElement = DOM.toggleResults.querySelector('.material-icons');
+          if (iconElement) {
+            iconElement.textContent = resultsCard.classList.contains('results-collapsed') ? 'expand_more' : 'expand_less';
+          }
+        }
+      });
+    }
+    
+    // モーダル閉じるボタン
+    if (DOM.modalClose) {
+      DOM.modalClose.addEventListener('click', () => {
+        this.hideModal();
+      });
+    }
+    
+    // モーダルキャンセルボタン
+    if (DOM.modalCancel) {
+      DOM.modalCancel.addEventListener('click', () => {
+        this.hideModal();
+      });
+    }
+    
+    // モーダル背景クリック
+    if (DOM.modalContainer) {
+      const backdrop = DOM.modalContainer.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.addEventListener('click', () => {
+          this.hideModal();
+        });
+      }
+    }
+    
+    // ヘルプ表示
+    if (DOM.showHelp) {
+      DOM.showHelp.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.showHelpModal();
+      });
+    }
+    
+    // システム情報表示
+    if (DOM.showAbout) {
+      DOM.showAbout.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.showAboutModal();
+      });
+    }
+  },
+
+  /**
+   * ローカルストレージから設定を読み込み
+   */
+  loadSettings() {
+    // ダークモード設定
+    const darkMode = localStorage.getItem('dark_mode');
+    if (darkMode !== null) {
+      AppConfig.isDarkMode = darkMode === 'true';
+      if (DOM.themeSwitch) {
+        DOM.themeSwitch.checked = AppConfig.isDarkMode;
+      }
+    }
+    
+    // 言語設定
+    const language = localStorage.getItem('language');
+    if (language) {
+      AppConfig.language = language;
+      if (DOM.languageSelect) {
+        DOM.languageSelect.value = language;
+      }
+    }
+    
+    // APIキー
+    const apiKey = localStorage.getItem('gemini_api_key');
+    if (apiKey) {
+      AppConfig.geminiApiKey = apiKey;
+      if (DOM.apiKeyInput) {
+        DOM.apiKeyInput.value = apiKey;
+      }
+    }
+    
+    // レスポンスタイプ
+    const responseType = localStorage.getItem('response_type');
+    if (responseType) {
+      AppConfig.responseType = responseType;
+      if (DOM.responseTypeSelect) {
+        DOM.responseTypeSelect.value = responseType;
+      }
+    }
+    
+    // 検索の重み
+    const semanticWeight = localStorage.getItem('semantic_weight');
+    if (semanticWeight !== null) {
+      AppConfig.semanticWeight = parseFloat(semanticWeight);
+      if (DOM.semanticWeight) {
+        const value = Math.round(AppConfig.semanticWeight * 100);
+        DOM.semanticWeight.value = value;
+        if (DOM.semanticWeightValue) {
+          DOM.semanticWeightValue.textContent = `${value}%`;
+        }
+      }
+    }
+    
+    const keywordWeight = localStorage.getItem('keyword_weight');
+    if (keywordWeight !== null) {
+      AppConfig.keywordWeight = parseFloat(keywordWeight);
+      if (DOM.keywordWeight) {
+        const value = Math.round(AppConfig.keywordWeight * 100);
+        DOM.keywordWeight.value = value;
+        if (DOM.keywordWeightValue) {
+          DOM.keywordWeightValue.textContent = `${value}%`;
+        }
+      }
+    }
+    
+    // 検索オプション
+    const expandQuery = localStorage.getItem('expand_query');
+    if (expandQuery !== null) {
+      AppConfig.expandQuery = expandQuery === 'true';
+      if (DOM.expandQuery) {
+        DOM.expandQuery.checked = AppConfig.expandQuery;
+      }
+    }
+    
+    const useCache = localStorage.getItem('use_cache');
+    if (useCache !== null) {
+      AppConfig.useCache = useCache === 'true';
+      if (DOM.useCache) {
+        DOM.useCache.checked = AppConfig.useCache;
+      }
+    }
+  },
+
+  /**
+   * ダークモードの初期設定
+   */
+  initTheme() {
+    // システムの設定を確認（ローカルストレージの設定が優先）
+    const darkMode = localStorage.getItem('dark_mode');
+    if (darkMode === null) {
+      // ローカルストレージに設定がない場合はシステム設定を使用
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      AppConfig.isDarkMode = prefersDarkMode;
+      
+      if (DOM.themeSwitch) {
+        DOM.themeSwitch.checked = prefersDarkMode;
+      }
+    }
+    
+    // テーマを適用
+    this.applyTheme();
+  },
+
+  /**
+   * テーマを適用
+   */
+  applyTheme() {
+    const bodyElement = document.body;
+    if (AppConfig.isDarkMode) {
+      bodyElement.classList.add('dark-theme');
+    } else {
+      bodyElement.classList.remove('dark-theme');
+    }
+  },
+
+  /**
+   * カテゴリ選択肢を更新
+   * @param {Array<string>} categories カテゴリ一覧
+   */
+  updateCategoryOptions(categories) {
+    if (!DOM.categorySelect) return;
+    
+    // 現在の選択値を保持
+    const currentValue = DOM.categorySelect.value;
+    
+    // 選択肢をクリア（最初の「すべて」オプションは残す）
+    DOM.categorySelect.innerHTML = '';
+    
+    // 「すべて」オプションを追加
+    const allOption = document.createElement('option');
+    allOption.value = '';
+    allOption.textContent = this.getTranslation('category_all');
+    DOM.categorySelect.appendChild(allOption);
+    
+    // カテゴリオプションを追加
+    categories.forEach(category => {
+      if (category) {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        DOM.categorySelect.appendChild(option);
+      }
+    });
+    
+    // 以前の選択値を復元（存在する場合）
+    if (currentValue) {
+      const exists = Array.from(DOM.categorySelect.options).some(option => option.value === currentValue);
+      if (exists) {
+        DOM.categorySelect.value = currentValue;
+      }
+    }
+  },
+
+  /**
+   * レスポンスタイプの選択肢を更新
+   * @param {Array<Object>} responseTypes レスポンスタイプ一覧
+   */
+  updateResponseTypeOptions(responseTypes) {
+    if (!DOM.responseTypeSelect) return;
+    
+    // 現在の選択値を保持
+    const currentValue = DOM.responseTypeSelect.value;
+    
+    // 選択肢をクリア
+    DOM.responseTypeSelect.innerHTML = '';
+    
+    // レスポンスタイプオプションを追加
+    responseTypes.forEach(type => {
+      const option = document.createElement('option');
+      option.value = type.id;
+      option.textContent = type.name;
+      DOM.responseTypeSelect.appendChild(option);
+    });
+    
+    // 以前の選択値を復元（存在する場合）
+    if (currentValue) {
+      const exists = Array.from(DOM.responseTypeSelect.options).some(option => option.value === currentValue);
+      if (exists) {
+        DOM.responseTypeSelect.value = currentValue;
+      }
+    } else {
+      // デフォルト値を設定
+      DOM.responseTypeSelect.value = AppConfig.responseType;
+    }
+  },
+
+  /**
+   * UIの言語を更新
+   */
+  updateUILanguage() {
+    // 翻訳テキストを適用
+    if (DOM.searchTitle) {
+      DOM.searchTitle.textContent = this.getTranslation('search');
+    }
+    
+    if (DOM.queryInput) {
+      DOM.queryInput.placeholder = this.getTranslation('search_placeholder');
+    }
+    
+    if (DOM.categorySelect) {
+      const label = DOM.categorySelect.parentElement.querySelector('label');
+      if (label) {
+        label.textContent = this.getTranslation('category');
+      }
+      
+      // すべてオプションを更新
+      const allOption = DOM.categorySelect.querySelector('option[value=""]');
+      if (allOption) {
+        allOption.textContent = this.getTranslation('category_all');
+      }
+    }
+    
+    if (DOM.responseTypeSelect) {
+      const label = DOM.responseTypeSelect.parentElement.querySelector('label');
+      if (label) {
+        label.textContent = this.getTranslation('response_type');
+      }
+    }
+    
+    if (DOM.apiKeyInput) {
+      const label = DOM.apiKeyInput.parentElement.parentElement.querySelector('label');
+      if (label) {
+        label.textContent = this.getTranslation('api_key');
+      }
+      DOM.apiKeyInput.placeholder = this.getTranslation('api_key_placeholder');
+    }
+    
+    if (DOM.semanticWeightValue) {
+      const label = DOM.semanticWeightValue.parentElement.querySelector('label');
+      if (label) {
+        const value = Math.round(AppConfig.semanticWeight * 100);
+        label.textContent = `${this.getTranslation('semantic_weight')}: ${value}%`;
+      }
+    }
+    
+    if (DOM.keywordWeightValue) {
+      const label = DOM.keywordWeightValue.parentElement.querySelector('label');
+      if (label) {
+        const value = Math.round(AppConfig.keywordWeight * 100);
+        label.textContent = `${this.getTranslation('keyword_weight')}: ${value}%`;
+      }
+    }
+    
+    if (DOM.expandQuery) {
+      const label = DOM.expandQuery.parentElement.parentElement;
+      if (label) {
+        const span = label.querySelector('span:not(.checkmark)');
+        if (span) {
+          span.textContent = this.getTranslation('expand_query');
+        }
+      }
+    }
+    
+    if (DOM.useCache) {
+      const label = DOM.useCache.parentElement.parentElement;
+      if (label) {
+        const span = label.querySelector('span:not(.checkmark)');
+        if (span) {
+          span.textContent = this.getTranslation('use_cache');
+        }
+      }
+    }
+    
+    const advancedSettings = document.querySelector('.advanced-options summary');
+    if (advancedSettings) {
+      advancedSettings.textContent = this.getTranslation('advanced_settings');
+    }
+    
+    if (DOM.loadingIndicator) {
+      const loadingText = DOM.loadingIndicator.querySelector('p');
+      if (loadingText) {
+        loadingText.textContent = this.getTranslation('loading');
+      }
+    }
+    
+    if (DOM.resultsTitle) {
+      DOM.resultsTitle.textContent = this.getTranslation('search_results');
+    }
+    
+    if (DOM.showHelp) {
+      DOM.showHelp.textContent = this.getTranslation('help');
+    }
+    
+    if (DOM.showAbout) {
+      DOM.showAbout.textContent = this.getTranslation('about');
+    }
+    
+    if (DOM.modalCancel) {
+      DOM.modalCancel.textContent = this.getTranslation('cancel');
+    }
+    
+    if (DOM.modalConfirm) {
+      DOM.modalConfirm.textContent = this.getTranslation('confirm');
+    }
+  },
+
+  /**
+   * 翻訳テキストを取得
+   * @param {string} key 翻訳キー
+   * @return {string} 翻訳テキスト
+   */
+  getTranslation(key) {
+    const translations = AppConfig.translations[AppConfig.language] || AppConfig.translations.en;
+    return translations[key] || key;
+  },
+
+  /**
+   * ローディング表示の切り替え
+   * @param {boolean} isLoading 読み込み中かどうか
+   */
+  showLoading(isLoading) {
+    if (DOM.loadingIndicator) {
+      DOM.loadingIndicator.style.display = isLoading ? 'flex' : 'none';
+    }
+  },
+
+  /**
+   * エラーメッセージを表示
+   * @param {string} message エラーメッセージ
+   */
+  showError(message) {
+    if (DOM.errorMessage && DOM.errorText) {
+      DOM.errorText.textContent = message;
+      DOM.errorMessage.style.display = 'flex';
+      
+      // スクロール位置を調整
+      DOM.errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  },
+
+  /**
+   * エラーメッセージを非表示
+   */
+  hideError() {
+    if (DOM.errorMessage) {
+      DOM.errorMessage.style.display = 'none';
+    }
+  },
+
+  /**
+   * 検索結果セクションを表示
+   * @param {boolean} visible 表示するかどうか
+   */
+  showResultsSection(visible) {
+    if (DOM.resultsSection) {
+      DOM.resultsSection.style.display = visible ? 'block' : 'none';
+    }
+  },
+
+  /**
+   * 検索結果を表示
+   * @param {Object} searchResults 検索結果オブジェクト
+   */
+  displaySearchResults(searchResults) {
+    if (!DOM.resultsContainer) return;
+    
+    // 結果コンテナをクリア
+    DOM.resultsContainer.innerHTML = '';
+    
+    // 検索結果がない場合
+    if (!searchResults || !searchResults.results || searchResults.results.length === 0) {
+      const noResultsElement = document.createElement('div');
+      noResultsElement.className = 'card';
+      noResultsElement.innerHTML = `<p>${this.getTranslation('no_results')}</p>`;
+      DOM.resultsContainer.appendChild(noResultsElement);
+      return;
+    }
+    
+    // 結果ヘッダーを作成
+    const header = document.createElement('div');
+    header.className = 'results-header';
+    header.innerHTML = `<h2>${this.getTranslation('results')}: ${searchResults.results.length}</h2>`;
+    DOM.resultsContainer.appendChild(header);
+    
+    // 結果リストを作成
+    const resultsList = document.createElement('div');
+    resultsList.className = 'results-list';
+    
+    // 各結果をリストに追加
+    searchResults.results.forEach((result, index) => {
+      const resultCard = document.createElement('div');
+      resultCard.className = 'card result-card';
+      resultCard.setAttribute('data-result-index', index);
+      
+      // 結果カードの内容を作成
+      resultCard.innerHTML = `
+        <h3>${result.title || 'Untitled Document'}</h3>
+        <p class="result-category">${result.category || 'General'}</p>
+        <div class="result-snippet">
+          <p>${result.snippet || result.content || 'No preview available'}</p>
+        </div>
+        <div class="result-meta">
+          <span class="result-relevance">${this.getTranslation('relevance')}: ${Math.round(result.relevance_score * 100)}%</span>
+          <span class="result-language">${result.language || 'Unknown'}</span>
+        </div>
+      `;
+      
+      // 結果カードクリックイベント
+      resultCard.addEventListener('click', () => {
+        this.showDocumentModal(result);
+      });
+      
+      resultsList.appendChild(resultCard);
+    });
+    
+    DOM.resultsContainer.appendChild(resultsList);
+  },
+
+  /**
+   * レスポンスを表示
+   * @param {Object} response レスポンスオブジェクト
+   */
+  displayResponse(response) {
+    if (!DOM.responseContainer) return;
+    
+    // レスポンスコンテナをクリア
+    DOM.responseContainer.innerHTML = '';
+    
+    // レスポンスがない場合は終了
+    if (!response || !response.content) {
+      return;
+    }
+    
+    // レスポンスカードを作成
+    const responseCard = document.createElement('div');
+    responseCard.className = 'card response-card';
+    
+    // マークダウンをHTMLに変換
+    const responseHtml = this.convertMarkdownToHtml(response.content);
+    
+    // レスポンスカードの内容を作成
+    responseCard.innerHTML = `
+      <h2>${this.getTranslation('response')} (${response.response_type || 'standard'})</h2>
+      <div class="response-content">${responseHtml}</div>
+      <div class="response-meta">
+        <span class="response-language">${response.language || 'Unknown'}</span>
+        <span class="response-time">${(response.generation_time_ms / 1000).toFixed(2)}s</span>
+      </div>
+    `;
+    
+    DOM.responseContainer.appendChild(responseCard);
+    
+    // スクロール位置を調整
+    responseCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  },
+
+  /**
+   * マークダウンをHTMLに変換
+   * @param {string} markdown マークダウンテキスト
+   * @return {string} HTML
+   */
+  convertMarkdownToHtml(markdown) {
+    if (!markdown) return '';
+    
+    let html = markdown;
+    
+    // ヘッダー
+    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+    html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+    
+    // 強調とイタリック
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // コード
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    
+    // コードブロック
+    html = html.replace(/```([^`]*?)```/gs, function(match, code) {
+      return `<pre><code>${code.trim()}</code></pre>`;
+    });
+    
+    // リンク
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    
+    // リスト処理
+    // 箇条書きリスト
+    const bulletListPattern = /^(\s*)-\s+(.*?)(?=^(?:\s*)-|^(?:\s*)\d+\.|$)/gms;
+    html = html.replace(bulletListPattern, (match, indent, items) => {
+      const listItems = items.trim().split(/\n\s*-\s+/).map(item => `<li>${item.trim()}</li>`).join('');
+      return `<ul>${listItems}</ul>`;
+    });
+    
+    // 番号付きリスト
+    const numberedListPattern = /^(\s*)\d+\.\s+(.*?)(?=^(?:\s*)-|^(?:\s*)\d+\.|$)/gms;
+    html = html.replace(numberedListPattern, (match, indent, items) => {
+      const listItems = items.trim().split(/\n\s*\d+\.\s+/).map(item => `<li>${item.trim()}</li>`).join('');
+      return `<ol>${listItems}</ol>`;
+    });
+    
+    // 引用
+    html = html.replace(/^>\s*(.*$)/gim, '<blockquote>$1</blockquote>');
+    
+    // 隣接する同じ種類のリストを結合
+    html = html.replace(/<\/ul>\s*<ul>/g, '');
+    html = html.replace(/<\/ol>\s*<ol>/g, '');
+    
+    // 隣接する同じ種類の引用を結合
+    html = html.replace(/<\/blockquote>\s*<blockquote>/g, '<br>');
+    
+    // 段落（他のマークダウン要素に一致しないテキスト）
+    html = html.replace(/^(?!<[a-z])(.*$)/gim, '<p>$1</p>');
+    
+    // 空の段落を削除
+    html = html.replace(/<p><\/p>/g, '');
+    
+    return html;
+  },
+
+  /**
+   * モーダルダイアログを表示
+   * @param {string} title タイトル
+   * @param {string} content コンテンツHTML
+   * @param {Function} onConfirm 確認ボタンのコールバック関数
+   * @param {Object} options オプション
+   */
+  showModal(title, content, onConfirm = null, options = {}) {
+    if (!DOM.modalContainer || !DOM.modalTitle || !DOM.modalBody) return;
+    
+    // モーダルを設定
+    DOM.modalTitle.textContent = title;
+    DOM.modalBody.innerHTML = content;
+    
+    // 確認ボタンのコールバックを設定
+    DOM.modalConfirm.onclick = onConfirm || function() { UIController.hideModal(); };
+    
+    // フッターボタンの表示設定
+    DOM.modalCancel.style.display = options.showCancel !== false ? 'block' : 'none';
+    DOM.modalConfirm.style.display = options.showConfirm !== false ? 'block' : 'none';
+    
+    // 確認ボタンのテキスト設定
+    if (options.confirmText) {
+      DOM.modalConfirm.textContent = options.confirmText;
+    } else {
+      DOM.modalConfirm.textContent = this.getTranslation('confirm');
+    }
+    
+    // モーダルを表示
+    DOM.modalContainer.style.display = 'block';
+    
+    // スクロールを無効化
+    document.body.style.overflow = 'hidden';
+  },
+
+  /**
+   * モーダルダイアログを非表示
+   */
+  hideModal() {
+    if (!DOM.modalContainer) return;
+    
+    // モーダルを非表示
+    DOM.modalContainer.style.display = 'none';
+    
+    // スクロールを有効化
+    document.body.style.overflow = '';
+    
+    // コールバックをクリア
+    DOM.modalConfirm.onclick = null;
+  },
+
+  /**
+   * ドキュメント詳細モーダルを表示
+   * @param {Object} document ドキュメントオブジェクト
+   */
+  showDocumentModal(document) {
+    const title = document.title || 'Document Details';
+    
+    // モーダルコンテンツを作成
+    let content = `
+      <div class="document-details">
+        <div class="document-section">
+          <h3>Document Information</h3>
+          <p><strong>Title:</strong> ${document.title || 'Untitled'}</p>
+          <p><strong>Category:</strong> ${document.category || 'Uncategorized'}</p>
+          <p><strong>Language:</strong> ${document.language || 'Unknown'}</p>
+          <p><strong>Format:</strong> ${document.format || 'Unknown'}</p>
+          <p><strong>Last Updated:</strong> ${new Date(document.last_updated).toLocaleString() || 'Unknown'}</p>
+        </div>
+        
+        <div class="document-section">
+          <h3>Content</h3>
+          <div class="document-content">
+            ${document.content || document.snippet || 'No content available'}
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // モーダルを表示
+    this.showModal(title, content, null, {
+      showCancel: false,
+      showConfirm: false
+    });
+  },
+
+  /**
+   * ヘルプモーダルを表示
+   */
+  showHelpModal() {
+    const title = this.getTranslation('help');
+    
+    // モーダルコンテンツを作成
+    let content = `
+      <div class="help-content">
+        <div class="help-section">
+          <h3>Basic Search</h3>
+          <p>Enter your question in the search box and click the search button or press Enter.</p>
+          <p>You can select a specific category to narrow down the search results.</p>
+        </div>
+        
+        <div class="help-section">
+          <h3>Response Types</h3>
+          <p>You can select different response formats:</p>
+          <ul>
+            <li><strong>Standard:</strong> A general response format</li>
+            <li><strong>Email:</strong> Formatted like an email response</li>
+            <li><strong>PREP:</strong> Point, Reason, Example, Proposal format</li>
+            <li><strong>Detailed:</strong> In-depth response with more information</li>
+          </ul>
+        </div>
+        
+        <div class="help-section">
+          <h3>Gemini API Key</h3>
+          <p>You can optionally provide your own Gemini API key for enhanced performance.</p>
+          <p>Your API key is stored locally on your device and is never sent to our servers.</p>
+        </div>
+        
+        <div class="help-section">
+          <h3>Advanced Settings</h3>
+          <p>You can customize the search behavior:</p>
+          <ul>
+            <li><strong>Semantic Search Weight:</strong> Adjust the importance of meaning-based search</li>
+            <li><strong>Keyword Search Weight:</strong> Adjust the importance of keyword matching</li>
+            <li><strong>Expand Search Query:</strong> Include related terms in the search</li>
+            <li><strong>Use Cache:</strong> Use cached results for faster responses</li>
+          </ul>
+        </div>
+      </div>
+    `;
+    
+    // モーダルを表示
+    this.showModal(title, content, null, {
+      showCancel: false,
+      showConfirm: false
+    });
+  },
+
+  /**
+   * システム情報モーダルを表示
+   */
+  async showAboutModal() {
+    const title = this.getTranslation('about');
+    
+    // ヘルスチェックを実行
+    let healthInfo = {};
+    try {
+      healthInfo = await ApiService.healthCheck(true);
+    } catch (error) {
+      console.error('Health check failed:', error);
+      healthInfo = {
+        status: 'ERROR',
+        version: AppConfig.version,
+        timestamp: new Date().toISOString()
+      };
+    }
+    
+    // モーダルコンテンツを作成
+    let content = `
+      <div class="about-content">
+        <div class="about-section">
+          <h3>System Information</h3>
+          <p><strong>Status:</strong> ${healthInfo.status || 'Unknown'}</p>
+          <p><strong>Version:</strong> ${healthInfo.version || AppConfig.version}</p>
+          <p><strong>Last Updated:</strong> ${new Date(healthInfo.timestamp).toLocaleString()}</p>
+        </div>
+        
+        <div class="about-section">
+          <h3>Components</h3>
+          <ul>
+      `;
+    
+    // コンポーネント状態を追加
+    if (healthInfo.components) {
+      for (const [component, status] of Object.entries(healthInfo.components)) {
+        const statusIcon = status ? '✅' : '❌';
+        content += `<li><strong>${component}:</strong> ${statusIcon}</li>`;
+      }
+    }
+    
+    content += `
+          </ul>
+        </div>
+    `;
+    
+    // 詳細情報を追加（存在する場合）
+    if (healthInfo.details) {
+      content += `
+        <div class="about-section">
+          <h3>System Details</h3>
+          <p><strong>Document Count:</strong> ${healthInfo.details.document_count || 0}</p>
+          <p><strong>Chunk Count:</strong> ${healthInfo.details.chunk_count || 0}</p>
+          <p><strong>Template Count:</strong> ${healthInfo.details.template_count || 0}</p>
+        </div>
+      `;
+    }
+    
+    content += `
+      </div>
+    `;
+    
+    // モーダルを表示
+    this.showModal(title, content, null, {
+      showCancel: false,
+      showConfirm: false
+    });
+  }
+};
+
+// アプリケーションコントローラー
+const AppController = {
+  /**
+   * アプリケーションを初期化
+   */
+  async init() {
+    console.log('Initializing RAG 2.0 application...');
+    
+    try {
+      // API通信を初期化
+      ApiService.init();
+      
+      // UIを初期化
+      UIController.init();
+      
+      // ローカルストレージから設定を読み込み
+      UIController.loadSettings();
+      
+      // 設定を読み込み
+      await this.loadConfig();
+      
+      // カテゴリを読み込み
+      await this.loadCategories();
+      
+      // テンプレートを読み込み
+      await this.loadTemplates();
+      
+      console.log('Application initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize application:', error);
+      UIController.showError('アプリケーションの初期化に失敗しました。ページを再読み込みしてください。');
+    }
+  },
+
+  /**
+   * 設定を読み込み
+   */
+  async loadConfig() {
+    try {
+      const config = await ApiService.getConfig();
+      
+      // 設定を更新
+      if (config.version) AppConfig.version = config.version;
+      if (config.theme_color) document.documentElement.style.setProperty('--md-sys-color-primary', config.theme_color);
+      
+      // 言語設定
+      if (config.supported_languages && config.supported_languages.length > 0) {
+        // 言語選択肢を更新
+        if (DOM.languageSelect) {
+          DOM.languageSelect.innerHTML = '';
+          config.supported_languages.forEach(lang => {
+            const option = document.createElement('option');
+            option.value = lang;
+            option.textContent = lang === 'ja' ? '日本語' : 'English';
+            DOM.languageSelect.appendChild(option);
+          });
+          
+          // 現在の言語を設定
+          DOM.languageSelect.value = AppConfig.language;
+        }
+      }
+      
+      // レスポンスタイプ
+      if (config.response_types && config.response_types.length > 0) {
+        UIController.updateResponseTypeOptions(config.response_types);
+      }
+      
+      // 検索設定
+      if (config.max_search_results) {
+        AppConfig.maxSearchResults = config.max_search_results;
+      }
+      if (config.semantic_search_weight) {
+        AppConfig.semanticWeight = config.semantic_search_weight;
+      }
+      if (config.keyword_search_weight) {
+        AppConfig.keywordWeight = config.keyword_search_weight;
+      }
+      
+      console.log('Configuration loaded successfully');
+      return config;
+    } catch (error) {
+      console.error('Failed to load configuration:', error);
+      return {};
+    }
+  },
+
+  /**
+   * カテゴリを読み込み
+   */
+  async loadCategories() {
+    try {
+      const categories = await ApiService.getCategories();
+      
+      // カテゴリを更新
+      AppConfig.categories = categories;
+      
+      // カテゴリ選択肢を更新
+      UIController.updateCategoryOptions(categories);
+      
+      console.log('Categories loaded successfully:', categories.length);
+      return categories;
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+      return [];
+    }
+  },
+
+  /**
+   * テンプレートを読み込み
+   */
+  async loadTemplates() {
+    try {
+      const templates = await ApiService.getTemplates();
+      
+      // テンプレートを更新
+      AppConfig.templates = templates;
+      
+      console.log('Templates loaded successfully:', templates.length);
+      return templates;
+    } catch (error) {
+      console.error('Failed to load templates:', error);
+      return [];
+    }
+  },
+
+  /**
+   * 検索を実行
+   */
+  async handleSearch() {
+    try {
+      // クエリを取得
+      const query = DOM.queryInput.value.trim();
+      if (!query) return;
+      
+      // エラーメッセージを非表示
+      UIController.hideError();
+      
+      // ローディング表示
+      UIController.showLoading(true);
+      
+      // 検索オプションを構築
+      const options = {
+        language: AppConfig.language,
+        category: DOM.categorySelect.value,
+        semanticWeight: AppConfig.semanticWeight,
+        keywordWeight: AppConfig.keywordWeight,
+        expandQuery: AppConfig.expandQuery,
+        useCache: AppConfig.useCache
+      };
+      
+      // 検索を実行
+      const searchResults = await ApiService.search(query, options);
+      
+      // ローディング表示を終了
+      UIController.showLoading(false);
+      
+      // 検索結果セクションを表示
+      UIController.showResultsSection(true);
+      
+      // 検索結果を表示
+      UIController.displaySearchResults(searchResults);
+      
+      // レスポンスを生成
+      await this.generateResponse(query, searchResults);
+      
+      console.log('Search completed successfully');
+    } catch (error) {
+      console.error('Search failed:', error);
+      
+      // ローディング表示を終了
+      UIController.showLoading(false);
+      
+      // エラーメッセージを表示
+      UIController.showError(error.message || 'An error occurred during search');
+    }
+  },
+
+  /**
+   * レスポンスを生成
+   * @param {string} query 検索クエリ
+   * @param {Object} searchResults 検索結果
+   */
+  async generateResponse(query, searchResults) {
+    try {
+      // 結果IDがない場合は終了
+      if (!searchResults.result_id) return;
+      
+      // ローディング表示
+      UIController.showLoading(true);
+      
+      // レスポンス生成オプションを構築
+      const options = {
+        responseType: AppConfig.responseType,
+        language: AppConfig.language
+      };
+      
+      // レスポンスを生成
+      const response = await ApiService.generateResponse(query, searchResults, options);
+      
+      // ローディング表示を終了
+      UIController.showLoading(false);
+      
+      // レスポンスを表示
+      UIController.displayResponse(response);
+    } catch (error) {
+      console.error('Response generation failed:', error);
+      
+      // ローディング表示を終了
+      UIController.showLoading(false);
+      
+      // エラーメッセージを表示
+      UIController.showError(error.message || 'An error occurred during response generation');
+    }
+  }
+};
+
+// アプリケーションの初期化
+document.addEventListener('DOMContentLoaded', () => {
+  AppController.init();
+});
