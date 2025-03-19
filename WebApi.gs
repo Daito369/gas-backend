@@ -93,74 +93,72 @@ class WebApi {
   }
 
   /**
-   * APIフロントエンドページを提供します
-   * @param {Object} e イベントオブジェクト
-   * @return {HtmlOutput} HTMLレスポンス
-   */
-  static doGet(e) {
-    try {
-      // パラメータの取得
-      const params = e.parameter;
-      const view = params.view || 'index';
-      
-      // リクエストされたビューに基づいてHTMLを返す
-      let htmlContent;
-      switch (view) {
-        case 'index':
-          htmlContent = HtmlService.createHtmlOutputFromFile('index')
-            .setTitle('Google広告サポート RAG 2.0');
-          break;
+ * APIフロントエンドページを提供します
+ * @param {Object} e イベントオブジェクト
+ * @return {HtmlOutput} HTMLレスポンス
+ */
+static doGet(e) {
+  try {
+    // パラメータの取得
+    const params = e.parameter;
+    const view = params.view || 'index';
+    
+    // リクエストされたビューに基づいてHTMLを返す
+    let htmlContent;
+    switch (view) {
+      case 'index':
+        htmlContent = HtmlService.createHtmlOutputFromFile('index')
+          .setTitle('Google広告サポート RAG 2.0')
+          // セキュリティ設定を適用
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+        break;
           
-        case 'styles':
-          return ContentService.createTextOutput()
-            .setMimeType(ContentService.MimeType.CSS)
-            .setContent(this.getStylesContent());
+      case 'styles':
+        return ContentService.createTextOutput()
+          .setMimeType(ContentService.MimeType.CSS)
+          .setContent(this.getStylesContent());
           
-        case 'script':
-          return ContentService.createTextOutput()
-            .setMimeType(ContentService.MimeType.JAVASCRIPT)
-            .setContent(this.getScriptContent());
+      case 'script':
+        return ContentService.createTextOutput()
+          .setMimeType(ContentService.MimeType.JAVASCRIPT)
+          .setContent(this.getScriptContent());
           
-        case 'components':
-          htmlContent = HtmlService.createHtmlOutputFromFile('components')
-            .setTitle('Components');
-          break;
+      case 'components':
+        htmlContent = HtmlService.createHtmlOutputFromFile('components')
+          .setTitle('Components')
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+        break;
           
-        case 'config':
-          // フロントエンド設定を返す（認証が必要）
-          if (!this.isUserAuthenticated(e)) {
-            return HtmlService.createHtmlOutput('Authentication required')
-              .setTitle('Error');
-          }
-          
-          return ContentService.createTextOutput()
-            .setMimeType(ContentService.MimeType.JSON)
-            .setContent(JSON.stringify(this.getFrontendConfig()));
-          
-        default:
-          htmlContent = HtmlService.createHtmlOutput('<h1>Page Not Found</h1>')
+      case 'config':
+        // フロントエンド設定を返す（認証が必要）
+        if (!this.isUserAuthenticated(e)) {
+          return HtmlService.createHtmlOutput('Authentication required')
             .setTitle('Error');
-      }
-      
-      // XSSプロテクションヘッダーを追加
-      htmlContent.addHeader('X-XSS-Protection', '1; mode=block');
-      htmlContent.addHeader('X-Content-Type-Options', 'nosniff');
-      
-      return htmlContent;
-    } catch (error) {
-      // エラーハンドリング
-      ErrorHandler.handleError({
-        source: 'WebApi.doGet',
-        error: error,
-        severity: 'MEDIUM',
-        context: { view: e?.parameter?.view || 'index' }
-      });
-      
-      return HtmlService.createHtmlOutput(`<h1>Error</h1><p>${error.message}</p>`)
-        .setTitle('Error');
+        }
+          
+        return ContentService.createTextOutput()
+          .setMimeType(ContentService.MimeType.JSON)
+          .setContent(JSON.stringify(this.getFrontendConfig()));
+          
+      default:
+        htmlContent = HtmlService.createHtmlOutput('<h1>Page Not Found</h1>')
+          .setTitle('Error');
     }
+    
+    return htmlContent;
+  } catch (error) {
+    // エラーハンドリング
+    ErrorHandler.handleError({
+      source: 'WebApi.doGet',
+      error: error,
+      severity: 'MEDIUM',
+      context: { view: e?.parameter?.view || 'index' }
+    });
+      
+    return HtmlService.createHtmlOutput(`<h1>Error</h1><p>${error.message}</p>`)
+      .setTitle('Error');
   }
-
+}
   /**
    * 検索リクエストを処理します
    * @param {Object} requestData リクエストデータ
