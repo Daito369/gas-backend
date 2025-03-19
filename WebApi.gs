@@ -1451,3 +1451,20 @@ class WebApi {
     `;
   }
 }
+/**
+ * GASのWebアプリケーションエントリーポイント - GETリクエスト用
+ * @param {Object} e イベントオブジェクト
+ * @return {HtmlOutput} HTMLレスポンス
+ */
+function doGet(e) {
+  return WebApi.doGet(e);
+}
+
+/**
+ * GASのWebアプリケーションエントリーポイント - POSTリクエスト用
+ * @param {Object} e イベントオブジェクト
+ * @return {Object} APIレスポンス
+ */
+function doPost(e) {
+  return WebApi.doPost(e);
+}
